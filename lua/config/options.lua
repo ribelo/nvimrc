@@ -51,6 +51,7 @@ local m = {
   incsearch = true,
   equalalways = false,
   guifont = "JetBrainsMono Nerd Font:h8",
+  laststatus = 3,
 }
 
 for k, v in pairs(m) do
