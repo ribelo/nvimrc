@@ -20,9 +20,11 @@ return {
           local filename_icon, filename_color = require("nvim-web-devicons").get_icon_color(filename)
 
           local function get_diagnostics()
+            local order = { "Error", "Warn", "Info", "Hint" }
             local icons = require("lazyvim.config").icons.diagnostics
             local label = {}
-            for type, icon in pairs(icons) do
+            for _, type in ipairs(order) do
+              local icon = icons[type]
               local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(type)] })
               if n > 0 then
                 local fg = "#"
@@ -39,7 +41,6 @@ return {
             if not type then
               type = "foreground"
             end
-            vim.pretty_print("focused", props.focused)
             if props.focused then
               return string.format("#%06x", vim.api.nvim_get_hl_by_name(hl, true)[type])
             else
@@ -73,6 +74,7 @@ return {
               guifg = get_color("Yellow"),
             },
           }
+
           if #diagnostics > 0 then
             for i, label in ipairs(diagnostics) do
               table.insert(renderer, i, label)
@@ -163,6 +165,7 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
       opts.options.theme = "gruvbox-material"
+      table.remove(opts.sections.lualine_c, 1) -- remove diagnostics
       table.insert(opts.sections.lualine_x, {
         function()
           return require("util.dashboard").status()
