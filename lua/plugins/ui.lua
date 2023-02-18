@@ -17,19 +17,80 @@ return {
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
           local window = vim.api.nvim_win_get_number(props.win)
           ---@diagnostic disable-next-line: no-unknown
-          local icon, color = require("nvim-web-devicons").get_icon_color(filename)
-          return {
-            { icon, guifg = color },
-            { " " },
-            { filename },
+          local filename_icon, filename_color = require("nvim-web-devicons").get_icon_color(filename)
+
+          local function get_diagnostics()
+            local icons = require("lazyvim.config").icons.diagnostics
+            local label = {}
+            for type, icon in pairs(icons) do
+              local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(type)] })
+              if n > 0 then
+                local fg = "#"
+                  .. string.format("%06x", vim.api.nvim_get_hl_by_name("DiagnosticSign" .. type, true).foreground)
+                table.insert(label, { icon .. " " .. n .. " ", guifg = fg })
+              end
+            end
+            return label
+          end
+
+          ---@param hl string
+          ---@param type? string
+          local function get_color(hl, type)
+            if not type then
+              type = "foreground"
+            end
+            vim.pretty_print("focused", props.focused)
+            if props.focused then
+              return string.format("#%06x", vim.api.nvim_get_hl_by_name(hl, true)[type])
+            else
+              return
+            end
+          end
+
+          ---@param x any
+          ---@param y? any
+          local function when_focused(x, y)
+            if props.focused then
+              return x
+            else
+              return y
+            end
+          end
+
+          local diagnostics = get_diagnostics()
+          local renderer = {
+            { filename_icon, guifg = filename_color },
             { " " },
             {
+              filename,
+              gui = when_focused("italic"),
+              guifg = get_color("Yellow"),
+            },
+            { " | ", guifg = get_color("NonText") },
+            {
               window,
+              gui = when_focused("italic"),
+              guifg = get_color("Yellow"),
             },
           }
+          if #diagnostics > 0 then
+            for i, label in ipairs(diagnostics) do
+              table.insert(renderer, i, label)
+            end
+          end
+
+          return renderer
         end,
       })
     end,
+  },
+  {
+    "akinsho/bufferline.nvim",
+    opts = {
+      options = {
+        diagnostics_indicator = false,
+      },
+    },
   },
 
   {
@@ -101,7 +162,6 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
-      vim.pretty_print("opts", opts)
       opts.options.theme = "gruvbox-material"
       table.insert(opts.sections.lualine_x, {
         function()

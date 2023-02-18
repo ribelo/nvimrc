@@ -39,6 +39,11 @@ return {
         end,
         desc = "LSP Code Action",
       }
+      local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+      local diagnostics = require("lazyvim.config").icons.diagnostics
+      for type, _ in pairs(diagnostics) do
+        diagnostics[type] = signs[type]
+      end
     end,
     opts = {
       servers = {
