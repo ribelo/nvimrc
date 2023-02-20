@@ -19,22 +19,6 @@ return {
           ---@diagnostic disable-next-line: no-unknown
           local filename_icon, filename_color = require("nvim-web-devicons").get_icon_color(filename)
 
-          local function get_diagnostics()
-            local order = { "Error", "Warn", "Info", "Hint" }
-            local icons = require("lazyvim.config").icons.diagnostics
-            local label = {}
-            for _, type in ipairs(order) do
-              local icon = icons[type]
-              local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(type)] })
-              if n > 0 then
-                local fg = "#"
-                  .. string.format("%06x", vim.api.nvim_get_hl_by_name("DiagnosticSign" .. type, true).foreground)
-                table.insert(label, { icon .. " " .. n .. " ", guifg = fg })
-              end
-            end
-            return label
-          end
-
           ---@param hl string
           ---@param type? string
           local function get_color(hl, type)
@@ -46,6 +30,21 @@ return {
             else
               return
             end
+          end
+
+          local function get_diagnostics()
+            local order = { "Error", "Warn", "Info", "Hint" }
+            local icons = require("lazyvim.config").icons.diagnostics
+            local label = {}
+            for _, type in ipairs(order) do
+              local icon = icons[type]
+              local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(type)] })
+              if n > 0 then
+                local fg = get_color("DiagnosticSign" .. type)
+                table.insert(label, { icon .. " " .. n .. " ", guifg = fg })
+              end
+            end
+            return label
           end
 
           ---@param x any
@@ -79,6 +78,7 @@ return {
             for i, label in ipairs(diagnostics) do
               table.insert(renderer, i, label)
             end
+            table.insert(renderer, #diagnostics + 1, { "| ", guifg = get_color("NonText") })
           end
 
           return renderer
