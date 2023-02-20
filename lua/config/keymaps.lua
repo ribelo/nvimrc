@@ -2,28 +2,21 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local opts = { noremap = true, silent = true }
-
-local term_opts = { silent = true }
-
-local map = vim.keymap.set
-local api = vim.api
-
-vim.keymap.del("n", "<leader>l")
-map("i", "jk", "<esc>l", opts)
-map("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
+vim.keymap.del("n", "<leader>l") -- remove lazy vim keybind
+vim.keymap.set("i", "jk", "<esc>l")
+vim.keymap.set("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 -- leader timeout
 -- (vim.cmd("set timeoutlen=1000"))
 
 -- do not yank with x
-map("n", "x", '"_x')
+vim.keymap.set("n", "x", '"_x')
 --
 -- (map :n "q:" :<nop> opts) ;; add timeout to q :/
 --
 -- window keys
-map("n", "<leader>ws", ":split<CR>", opts)
-map("n", "<leader>wv", ":vsplit<CR>", opts)
-map("n", "<leader>wd", ":q!<CR>", opts)
+vim.keymap.set("n", "<leader>ws", ":split<CR>", { desc = "Window hsplit" })
+vim.keymap.set("n", "<leader>wv", ":vsplit<CR>", { desc = "Window vsplit" })
+vim.keymap.set("n", "<leader>wd", ":q!<CR>", { desc = "Window delete!" })
 
 -- terminal
 -- map("t", "<esc>", "<C-\\><C-n>", opts)
@@ -31,12 +24,12 @@ map("n", "<leader>wd", ":q!<CR>", opts)
 -- (map :v :<localleader>ss ":ToggleTermSendVisualSelection<CR>" opts)
 --
 -- buffer keys
-map("n", "<leader>bs", ":w<CR>", opts)
-map("n", "<leader>bS", ":wa<CR>", opts)
+vim.keymap.set("n", "<leader>bs", ":w<CR>", { desc = "Save buffer" })
+vim.keymap.set("n", "<leader>bS", ":wa<CR>", { desc = "Save all buffers" })
 --
 -- tabs keys
-map("n", "<leader>tn", ":tabnew<CR>", opts)
-map("n", "<leader>tc", ":tabc<CR>", opts)
+vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader>tc", ":tabc<CR>", { desc = "Close tab" })
 
 -- change window to id
 local function change_window(x)
@@ -56,5 +49,5 @@ for i = 1, 6, 1 do
   local rhs = function()
     change_window(i)
   end
-  map("n", lhs, rhs, { desc = "Move to window " .. i })
+  vim.keymap.set("n", lhs, rhs, { desc = "Move to window " .. i })
 end

@@ -31,6 +31,20 @@ return {
         mode = { "n", "i" },
       },
       {
+        "<c-m-l>",
+        function()
+          require("pareto_nvim").forward_slurp()
+        end,
+        mode = { "n", "i" },
+      },
+      {
+        "<c-m-h>",
+        function()
+          require("pareto_nvim").forward_barf()
+        end,
+        mode = { "n", "i" },
+      },
+      {
         "<localleader>ww",
         function()
           require("pareto_nvim").wrap_node("(")
@@ -81,6 +95,12 @@ return {
       {
         "<localleader>o",
         function()
+          require("pareto_nvim").raise_node()
+        end,
+      },
+      {
+        "<localleader>@",
+        function()
           require("pareto_nvim").splice_node()
         end,
       },
@@ -124,6 +144,7 @@ return {
 
   {
     "andymass/vim-matchup",
+    version = false,
     enabled = true,
     event = "BufReadPost",
     config = function()
@@ -178,7 +199,7 @@ return {
   },
   {
     "jackMort/ChatGPT.nvim",
-    enabled = false,
+    enabled = true,
     dependencies = {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",

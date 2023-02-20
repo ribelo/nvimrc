@@ -1,4 +1,9 @@
 return {
+  { "rktjmp/paperplanes.nvim", opts = {
+    provider_options = {
+      expires = 24,
+    },
+  } },
   {
     "nvim-orgmode/orgmode",
     version = false,
