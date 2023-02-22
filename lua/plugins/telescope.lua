@@ -58,7 +58,9 @@ return {
         opts = {
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
-          patterns = { ".git", ".deps", ".shadow-cljs", "project.clj", "package.json", "Cargo.toml" },
+          silent_chdir = false,
+          ignore_lsp = { "tailwindcss", "null-ls" },
+          patterns = { ".deps", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
         },
         config = function(_, opts)
           require("telescope").load_extension("projects")
