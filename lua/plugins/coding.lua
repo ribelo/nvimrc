@@ -239,6 +239,7 @@ return {
       let g:conjure#highlight#timeout = 250
       let g:conjure#client#clojure#nrepl#connection#auto_repl#enabled = 0
       ]])
+      vim.keymap.set("x", "<localleader>E", ":WhichKey ,<cr>", {})
     end,
   },
 }

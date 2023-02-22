@@ -4,7 +4,6 @@ return {
   "dhruvasagar/vim-table-mode",
   "akinsho/org-bullets.nvim",
   "lukas-reineke/headlines.nvim",
-  "clojure-vim/clojure.vim",
   "clojure-vim/vim-jack-in",
   -- "guns/vim-sexp",
   "tpope/vim-fugitive",
@@ -12,6 +11,10 @@ return {
   "radenling/vim-dispatch-neovim",
   "dhruvasagar/vim-table-mode",
   "windwp/nvim-ts-autotag",
+
+  -- {
+  --   dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
+  -- },
 
   {
     "ribelo/pareto.nvim",
