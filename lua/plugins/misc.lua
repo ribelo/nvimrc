@@ -111,6 +111,14 @@ return {
   },
 
   {
+    "ribelo/prompter.nvim",
+    keys = {
+      { "<leader>cp", ":PrompterBrowser<cr>", mode = { "n", "x" }, desc = "Prompter browser" },
+    },
+    config = true,
+  },
+
+  {
     "Wansmer/treesj",
     keys = {
       { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },

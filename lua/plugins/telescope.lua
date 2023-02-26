@@ -37,10 +37,12 @@ return {
           require("telescope").load_extension("fzy_native")
         end,
       },
-      -- {
-      --   "nvim-telescope/telescope-frecency.nvim",
-      --   config = function() require("telescope").load_extension("frecency") end
-      -- },
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        config = function()
+          require("telescope").load_extension("frecency")
+        end,
+      },
       {
         "jvgrootveld/telescope-zoxide",
         config = function()
@@ -59,8 +61,8 @@ return {
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
           silent_chdir = false,
-          ignore_lsp = { "tailwindcss", "null-ls" },
-          patterns = { ".deps", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
+          ignore_lsp = { "tailwindcss", "null-ls", "lua_ls" },
+          patterns = { "deps.edn", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
         },
         config = function(_, opts)
           require("telescope").load_extension("projects")
@@ -71,6 +73,7 @@ return {
     config = true,
     keys = {
       { "<leader>ff", ":Telescope file_browser path=%:p:h<CR>", desc = "File Browser" },
+      { "<leader>fr", ":Telescope frecency<CR>", desc = "Recent files" },
       { "<leader>fz", ":Telescope zoxide list<cr>", desc = "Telescope zoxide" },
       { "<leader>fp", ":Telescope git_files<cr>", desc = "Telescope git files" },
       { "<leader>sk", ":Telescope keymaps<CR>", desc = "Keymaps Browser" },
