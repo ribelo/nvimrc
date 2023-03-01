@@ -1,4 +1,5 @@
 return {
+  "chaoren/vim-wordmotion",
   {
     "echasnovski/mini.align",
     version = false,
