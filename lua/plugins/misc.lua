@@ -22,14 +22,14 @@ return {
       {
         "<m-l>",
         function()
-          require("pareto_nvim").forward_node()
+          require("pareto_nvim").forward_sexp()
         end,
         mode = { "n", "i" },
       },
       {
         "<m-h>",
         function()
-          require("pareto_nvim").backward_node()
+          require("pareto_nvim").backward_sexp()
         end,
         mode = { "n", "i" },
       },
