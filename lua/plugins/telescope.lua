@@ -72,8 +72,9 @@ return {
     },
     config = true,
     keys = {
-      { "<leader>ff", ":Telescope file_browser path=%:p:h<CR>", desc = "File Browser" },
+      { "<leader>ff", ":Telescope file_browser path=%:p:h<CR>", desc = "File browser" },
       { "<leader>fr", ":Telescope frecency<CR>", desc = "Recent files" },
+      { "<leader>fR", ":Telescope find_files cwd=~/<CR>", desc = "Home browser" },
       { "<leader>fz", ":Telescope zoxide list<cr>", desc = "Telescope zoxide" },
       { "<leader>fp", ":Telescope git_files<cr>", desc = "Telescope git files" },
       { "<leader>sk", ":Telescope keymaps<CR>", desc = "Keymaps Browser" },

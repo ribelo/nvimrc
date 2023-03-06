@@ -17,12 +17,12 @@ return {
       execute "highlight!" "DiagnosticUnderlineWarn" "gui=underline" "guisp=" . s:palette.orange[0]
       execute "highlight!" "DiagnosticUnderlineError" "gui=underline" "guisp=" . s:palette.red[0]
       ]])
-      if vim.loop.os_gethostname() == "xps-15" then 
-        vim.cmd([[ 
+        if vim.loop.os_gethostname() == "xps-15" then
+          vim.cmd([[ 
         highlight! link TSSymbol Blue
         highlight! link TSKeyword Red
         ]])
-      end
+        end
       end
       vim.api.nvim_create_augroup("GruvboxMaterialCustom", { clear = true })
       vim.api.nvim_create_autocmd("ColorScheme", {

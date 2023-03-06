@@ -12,9 +12,9 @@ return {
   "dhruvasagar/vim-table-mode",
   "windwp/nvim-ts-autotag",
 
-  -- {
-  --   dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
-  -- },
+  {
+    dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
+  },
 
   {
     "ribelo/pareto.nvim",
@@ -111,7 +111,8 @@ return {
   },
 
   {
-    "ribelo/prompter.nvim",
+    -- "ribelo/prompter.nvim",
+    dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
     keys = {
       { "<leader>cp", ":PrompterBrowser<cr>", mode = { "n", "x" }, desc = "Prompter browser" },
     },
@@ -152,7 +153,6 @@ return {
     },
     keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
-
   {
     "andymass/vim-matchup",
     version = false,
