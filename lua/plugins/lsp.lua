@@ -1,5 +1,6 @@
 ---@diagnostic disable: no-unknown
 return {
+  -- lspconfig
   {
     "neovim/nvim-lspconfig",
     init = function()
@@ -13,11 +14,7 @@ return {
       }
       keys[#keys + 1] = {
         "<leader>lr",
-        function()
-          require("inc_rename")
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end,
-        expr = true,
+        vim.lsp.buf.rename,
         desc = "LSP Rename",
       }
       keys[#keys + 1] = {

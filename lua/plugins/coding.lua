@@ -117,6 +117,7 @@ return {
       ]])
     end,
   },
+  { "JoosepAlviste/nvim-ts-context-commentstring", lazy = false },
   {
     "gbprod/yanky.nvim",
     enabled = true,

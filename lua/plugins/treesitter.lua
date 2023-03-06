@@ -1,4 +1,5 @@
 return {
+  { "mrjones2014/nvim-ts-rainbow" },
   { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
   {
     "nvim-treesitter/nvim-treesitter-context",
@@ -60,6 +61,12 @@ return {
         "yaml",
         -- "wgsl",
       },
+      rainbow = {
+        enable = false,
+        extended_mode = true,
+        max_file_lines = 3000,
+        colors = { "#5E81AC", "#B48EAD", "#A3BE8C", "#EBCB8B", "#D08770", "#BF616A" },
+      },
       highlight = { enable = true, additional_vim_regex_highlighting = { "org" } },
       indent = { enable = false },
       incremental_selection = {
@@ -90,6 +97,13 @@ return {
         enable = true,
         use_virtual_text = true,
         lint_events = { "BufWrite", "CursorHold" },
+      },
+      context_commentstring = {
+        enable = true,
+        enable_autocmd = true,
+      },
+      matchup = {
+        enable = true,
       },
       playground = {
         enable = true,
