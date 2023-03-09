@@ -105,7 +105,6 @@ return {
     config = true,
   },
 
-  -- better yank/paste
   {
     "kkharji/sqlite.lua",
     enabled = function()
@@ -118,6 +117,7 @@ return {
     end,
   },
   { "JoosepAlviste/nvim-ts-context-commentstring", lazy = false },
+  -- better yank/paste
   {
     "gbprod/yanky.nvim",
     enabled = true,
@@ -212,7 +212,6 @@ return {
           augend.date.alias["%Y-%m-%d"],
           augend.constant.alias.bool,
           augend.semver.alias.semver,
-          auge,
         },
       })
     end,
@@ -222,8 +221,12 @@ return {
   {
     "zbirenbaum/copilot.lua",
     enabled = true,
-    event = "VeryLazy",
-    config = true,
+    cmd = "Copilot",
+    event = "InsertEnter",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = true },
+    },
   },
 
   {

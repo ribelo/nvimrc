@@ -47,6 +47,7 @@ return {
     },
     opts = { theme = "light" },
   },
+  "tpope/vim-fugitive",
   {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
