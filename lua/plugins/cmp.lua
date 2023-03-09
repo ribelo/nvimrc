@@ -11,6 +11,7 @@ return {
     },
     opts = function()
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
       return {
         completion = {
           completeopt = "menu,menuone,noinsert",
@@ -25,13 +26,12 @@ return {
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-e>"] = cmp.mapping.abort(),
-          ---@diagnostic disable-next-line: no-unknown
           ["<CR>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<C-x><C-f>"] = cmp.mapping.complete({ config = { sources = { { name = "path" } } } }),
           ["<C-x><C-o>"] = cmp.mapping.complete({ config = { sources = { { name = "nvim_lsp" } } } }),
           ["<C-x><C-p>"] = cmp.mapping.complete({ config = { sources = { { name = "copilot" } } } }),
 
-          ["<C-j>"] = function(fallback)
+          ["<C-j>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             else
@@ -39,8 +39,8 @@ return {
                 fallback()
               end
             end
-          end,
-          ["<C-k>"] = function(fallback)
+          end, { "i", "s", "c" }),
+          ["<C-k>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
             else
@@ -48,7 +48,14 @@ return {
                 fallback()
               end
             end
-          end,
+          end, { "i", "s", "c" }),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },

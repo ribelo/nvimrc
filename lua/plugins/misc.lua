@@ -15,6 +15,7 @@ return {
   {
     dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
   },
+  { "jakewvincent/mkdnflow.nvim", config = true },
 
   {
     "ribelo/pareto.nvim",
