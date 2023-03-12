@@ -216,7 +216,6 @@ return {
       })
     end,
   },
-
   -- copilot
   {
     "zbirenbaum/copilot.lua",
@@ -225,7 +224,10 @@ return {
     event = "InsertEnter",
     opts = {
       suggestion = { enabled = false },
-      panel = { enabled = true },
+      panel = { enabled = false },
+    },
+    keys = {
+      { "<leader>cP", "<cmd>Copilot panel<cr>", desc = "Copilot panel" },
     },
   },
 

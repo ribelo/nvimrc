@@ -5,7 +5,6 @@ return {
   "akinsho/org-bullets.nvim",
   "lukas-reineke/headlines.nvim",
   "clojure-vim/vim-jack-in",
-  -- "guns/vim-sexp",
   "tpope/vim-fugitive",
   "tpope/vim-dispatch",
   "radenling/vim-dispatch-neovim",
@@ -14,7 +13,18 @@ return {
 
   {
     dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
+    lazy = false,
+    config = true,
+    keys = {
+      {
+        "<leader>tw",
+        function()
+          require("taskwarrior_nvim").browser({ "ready" })
+        end,
+      },
+    },
   },
+
   { "jakewvincent/mkdnflow.nvim", config = true },
 
   {
@@ -230,12 +240,16 @@ return {
   },
 
   {
-    "folke/trouble.nvim",
+    "folke/todo-comments.nvim",
     opts = {
-      icons = false,
-      signs = {
-        error = "E",
-        warning = "W",
+      keywords = {
+        FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
     },
   },
