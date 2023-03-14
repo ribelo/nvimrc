@@ -60,7 +60,7 @@ return {
         opts = {
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
-          silent_chdir = false,
+          silent_chdir = true,
           ignore_lsp = { "tailwindcss", "null-ls", "lua_ls" },
           patterns = { "deps.edn", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
         },

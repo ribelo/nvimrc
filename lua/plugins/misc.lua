@@ -12,12 +12,17 @@ return {
   "windwp/nvim-ts-autotag",
 
   {
-    dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
-    lazy = false,
-    config = true,
+    -- dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
+    "ribelo/taskwarrior.nvim",
+    event = "BufReadPost",
+    opts = {},
     keys = {
       {
         "<leader>tw",
+        ":Task ",
+      },
+      {
+        "<leader>tW",
         function()
           require("taskwarrior_nvim").browser({ "ready" })
         end,

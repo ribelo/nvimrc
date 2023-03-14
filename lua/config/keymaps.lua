@@ -5,6 +5,7 @@
 vim.keymap.del("n", "<leader>l") -- remove lazy vim keybind
 vim.keymap.del("n", "<leader><leader>") -- remove telescope find_files rot
 vim.keymap.set("n", "<leader><leader>", ":Telescope find_files<cr>", { desc = "Find files" })
+vim.keymap.set("i", "<C-CR>", "<C-o>o")
 
 vim.keymap.set("i", "jk", "<esc>l")
 vim.keymap.set("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
