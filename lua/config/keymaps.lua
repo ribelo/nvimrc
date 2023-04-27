@@ -9,23 +9,15 @@ vim.keymap.set("i", "<C-CR>", "<C-o>o")
 
 vim.keymap.set("i", "jk", "<esc>l")
 vim.keymap.set("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
--- leader timeout
--- (vim.cmd("set timeoutlen=1000"))
 
 -- do not yank with x
 vim.keymap.set("n", "x", '"_x')
---
--- (map :n "q:" :<nop> opts) ;; add timeout to q :/
---
+
 -- window keys
 vim.keymap.set("n", "<leader>ws", ":split<CR>", { desc = "Window hsplit" })
 vim.keymap.set("n", "<leader>wv", ":vsplit<CR>", { desc = "Window vsplit" })
 vim.keymap.set("n", "<leader>wd", ":q!<CR>", { desc = "Window delete!" })
 
--- terminal
--- map("t", "<esc>", "<C-\\><C-n>", opts)
--- (map :t :jk "<C-\\><C-n>" opts)
--- (map :v :<localleader>ss ":ToggleTermSendVisualSelection<CR>" opts)
 --
 -- buffer keys
 vim.keymap.set("n", "<leader>bs", ":w<CR>", { desc = "Save buffer" })
@@ -34,6 +26,30 @@ vim.keymap.set("n", "<leader>bS", ":wa<CR>", { desc = "Save all buffers" })
 -- tabs keys
 vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { desc = "New tab" })
 vim.keymap.set("n", "<leader>tc", ":tabc<CR>", { desc = "Close tab" })
+
+-- scratch
+vim.keymap.set("n", "<leader>bx", ":e" .. vim.fn.expand("~/.local/share/nvim/.scratch") .. "<CR>", { desc = "Scratch" })
+
+vim.keymap.set("n", "<leader>sl", function()
+  vim.ui.select({
+    { label = "en", value = "en_us" },
+    { label = "pl", value = "pl" },
+    { label = "turn off" },
+  }, {
+    prompt = "Choose spell language",
+    format_item = function(item)
+      return item.label
+    end,
+  }, function(selected)
+    if selected and selected.value then
+      vim.cmd("set spelllang=" .. selected.value)
+      vim.notify("Spall language set to " .. selected.value)
+    elseif selected and not selected.value then
+      vim.cmd("set nospell")
+      vim.notify("Spell checker turned off")
+    end
+  end)
+end, { desc = "Choose spell lang" })
 
 -- change window to id
 local function change_window(x)

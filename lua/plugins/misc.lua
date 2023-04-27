@@ -1,19 +1,18 @@
 return {
   "folke/twilight.nvim",
   "lambdalisue/suda.vim",
-  "dhruvasagar/vim-table-mode",
-  "akinsho/org-bullets.nvim",
-  "lukas-reineke/headlines.nvim",
   "clojure-vim/vim-jack-in",
-  "tpope/vim-fugitive",
   "tpope/vim-dispatch",
   "radenling/vim-dispatch-neovim",
-  "dhruvasagar/vim-table-mode",
-  "windwp/nvim-ts-autotag",
 
   {
-    -- dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
-    "ribelo/taskwarrior.nvim",
+    dir = "/home/ribelo/projects/nvim_plugins/logseq.nvim/",
+  },
+
+  {
+    dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
+    -- "ribelo/taskwarrior.nvim",
+    -- enabled = false,
     event = "BufReadPost",
     opts = {},
     keys = {
@@ -22,18 +21,24 @@ return {
         ":Task ",
       },
       {
-        "<leader>tW",
+        "<leader>sT",
         function()
           require("taskwarrior_nvim").browser({ "ready" })
         end,
+        desc = "Task Browser",
+      },
+      {
+        "<leader>tC",
+        function()
+          require("taskwarrior_nvim").go_to_config_file()
+        end,
+        desc = "Task config file",
       },
     },
   },
 
-  { "jakewvincent/mkdnflow.nvim", config = true },
-
   {
-    "ribelo/pareto.nvim",
+    dir = "/home/ribelo/projects/nvim_plugins/pareto.nvim/",
     keys = {
       {
         "<m-l>",
@@ -121,6 +126,12 @@ return {
         "<localleader>@",
         function()
           require("pareto_nvim").splice_node()
+        end,
+      },
+      {
+        "|",
+        function()
+          require("pareto_nvim").split_node()
         end,
       },
     },

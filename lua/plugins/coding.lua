@@ -111,8 +111,9 @@ return {
       return not jit.os:find("Windows")
     end,
     config = function()
+      local _path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
       vim.cmd([[
-        let g:sqlite_clib_path = "/nix/store/8izb9ahnpnb93wqrv24ip897v82qw80b-sqlite-3.40.1/lib/libsqlite3.so"
+        let g:sqlite_clib_path = "/nix/store/0ssb3rn06pqn5qjms1ma9qcp10n2jjny-sqlite-3.41.2/lib/libsqlite3.so"
       ]])
     end,
   },
@@ -245,6 +246,8 @@ return {
       let g:conjure#highlight#enabled = 1
       let g:conjure#highlight#timeout = 250
       let g:conjure#client#clojure#nrepl#connection#auto_repl#enabled = 0
+      let g:conjure#mapping#doc_word = ""
+      let g:conjure#mapping#def_word = ""
       ]])
       vim.keymap.set("x", "<localleader>E", ":WhichKey ,<cr>", {})
     end,

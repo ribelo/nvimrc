@@ -32,7 +32,6 @@ return {
       end)
     end,
   },
-
   -- TODO:
   -- {
   --   "ggandor/leap.nvim",

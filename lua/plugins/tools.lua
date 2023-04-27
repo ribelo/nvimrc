@@ -1,4 +1,5 @@
 return {
+  "https://github.com/tpope/vim-fugitive",
   { "rktjmp/paperplanes.nvim", opts = {
     provider_options = {
       expires = 24,

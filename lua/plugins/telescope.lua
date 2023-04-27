@@ -79,7 +79,16 @@ return {
       { "<leader>fp", ":Telescope git_files<cr>", desc = "Telescope git files" },
       { "<leader>sk", ":Telescope keymaps<CR>", desc = "Keymaps Browser" },
       { "<leader>'", ":Telescope resume<CR>", desc = "Resume" },
-      { "<leader>sp", ":Telescope live_grep hidden=true<CR>", desc = "Live grep" },
+      { "<leader>sp", ":Telescope live_grep<CR>", desc = "Live grep cwd" },
+      {
+        "<leader>sP",
+        function()
+          require("telescope.builtin").live_grep({
+            cwd = vim.fn.trim(vim.fn.system("git rev-parse --show-toplevel")),
+          })
+        end,
+        desc = "Live grep git dir",
+      },
       {
         "<leader>pp",
         function()

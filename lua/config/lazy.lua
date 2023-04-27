@@ -36,14 +36,14 @@ require("lazy").setup({
       paths = { vim.fn.stdpath("data") .. "/site" },
       -- disable some rtp plugins
       disabled_plugins = {
-        "gzip",
+        -- "gzip",
         -- "matchit",
         -- "matchparen",
-        -- "netrwPlugin",
-        "tarPlugin",
+        "netrwPlugin",
+        -- "tarPlugin",
         "tohtml",
         "tutor",
-        "zipPlugin",
+        -- "zipPlugin",
       },
     },
   },

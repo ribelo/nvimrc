@@ -1,3 +1,34 @@
+local clojure_makrdown_injection = [[
+; extends
+(list_lit
+ .
+ (sym_lit) @_keyword
+ (#any-of? @_keyword
+   "def" "defonce" "defrecord" "defmacro" "definline"
+   "defmulti" "defmethod" "defstruct" "defprotocol"
+   "deftype" "defn" "defn-")
+ .
+ (sym_lit)
+ .
+ ((str_lit) @markdown)
+ .
+ (_))
+]]
+
+local lua_makrdown_injection = [[
+; extends
+(
+ (comment ("comment_content") @markdown)
+ (#match? @markdown "--$")
+ (#set! "priority" 130)
+ )
+]]
+
+local markdown_injections = {
+  ["clojure"] = clojure_makrdown_injection,
+  ["lua"] = lua_makrdown_injection,
+}
+
 return {
   { "mrjones2014/nvim-ts-rainbow" },
   { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
@@ -61,12 +92,6 @@ return {
         "yaml",
         -- "wgsl",
       },
-      rainbow = {
-        enable = false,
-        extended_mode = true,
-        max_file_lines = 3000,
-        colors = { "#5E81AC", "#B48EAD", "#A3BE8C", "#EBCB8B", "#D08770", "#BF616A" },
-      },
       highlight = { enable = true, additional_vim_regex_highlighting = { "org" } },
       indent = { enable = false },
       incremental_selection = {
@@ -99,7 +124,7 @@ return {
         lint_events = { "BufWrite", "CursorHold" },
       },
       context_commentstring = {
-        enable = true,
+        enable = false,
         enable_autocmd = true,
       },
       matchup = {
@@ -122,6 +147,32 @@ return {
           goto_node = "<cr>",
           show_help = "?",
         },
+      },
+    },
+    keys = {
+      {
+        "<leader>li",
+        function()
+          if not vim.g.makrdown_injections then
+            vim.g.markdown_injections = {}
+          end
+          local lang = vim.bo.filetype
+          if markdown_injections[lang] then
+            if not vim.g.markdown_injections[lang] then
+              vim.notify("Injecting markdown into " .. lang)
+              require("vim.treesitter.query").set_query(lang, "injections", markdown_injections[lang])
+              vim.g.markdown_injections["foo"] = true
+              vim.cmd([[:w]])
+              vim.cmd([[:e]])
+            else
+              vim.notify("Removing markdown injection from " .. lang)
+              require("vim.treesitter.query").set_query(lang, "injections", "")
+              vim.g.markdown_injections[lang] = false
+              vim.cmd([[:w]])
+              vim.cmd([[:e]])
+            end
+          end
+        end,
       },
     },
   },

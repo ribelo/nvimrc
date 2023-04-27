@@ -3,6 +3,9 @@ return {
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      "simrat39/rust-tools.nvim",
+    },
     init = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = {
@@ -36,6 +39,19 @@ return {
         end,
         desc = "LSP Code Action",
       }
+      keys[#keys + 1] = {
+        "<leader>lt",
+        function()
+          if vim.g.lsp_diagnostics_enabled or vim.g.lsp_diagnostics_enabled == nil then
+            vim.diagnostic.disable(vim.api.nvim_get_current_buf())
+            vim.g.lsp_diagnostics_enabled = false
+          else
+            vim.diagnostic.enable(vim.api.nvim_get_current_buf())
+            vim.g.lsp_diagnostics_enabled = true
+          end
+        end,
+        desc = "LSP Toggle Diagnostics",
+      }
       local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
       local diagnostics = require("lazyvim.config").icons.diagnostics
       for type, _ in pairs(diagnostics) do
@@ -51,6 +67,8 @@ return {
         marksman = { mason = false, cmd = { "marksman", "server" } },
         pyright = {},
         rust_analyzer = {
+          cmd = { "rust-analyzer" },
+          -- cmd = { "rustup", "run", "nightly", "rust-analyzer" },
           mason = false,
           settings = {
             ["rust-analyzer"] = {
@@ -130,6 +148,29 @@ return {
           mason = false,
           cmd = { "clojure-lsp" },
         },
+      },
+      setup = {
+        rust_analyzer = function(_, opts)
+          require("lazyvim.util").on_attach(function(client, buffer)
+            if client.name == "rust_analyzer" then
+              -- stylua: ignore
+              vim.keymap.set("n", "<leader>co", ":RustHoverActions", { buffer = buffer, desc = "Hover Actions (Rust)" })
+              vim.keymap.set("n", "<leader>cR", "RustCodeActionGroup", { buffer = buffer, desc = "Code Action (Rust)" })
+            end
+          end)
+          local rust_opts = {
+            server = vim.tbl_deep_extend("force", {}, opts, opts.server or {}),
+            tools = { -- rust-tools options
+              -- options same as lsp hover / vim.lsp.util.open_floating_preview()
+              hover_actions = {
+                -- whether the hover action window gets automatically focused
+                auto_focus = true,
+              },
+            },
+          }
+          require("rust-tools").setup(rust_opts)
+          return true
+        end,
       },
     },
   },
