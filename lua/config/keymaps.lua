@@ -28,11 +28,14 @@ vim.keymap.set("n", "<leader>tn", ":tabnew<CR>", { desc = "New tab" })
 vim.keymap.set("n", "<leader>tc", ":tabc<CR>", { desc = "Close tab" })
 
 -- scratch
-vim.keymap.set("n", "<leader>bx", ":e" .. vim.fn.expand("~/.local/share/nvim/.scratch") .. "<CR>", { desc = "Scratch" })
+vim.keymap.set("n", "<leader>bx", ":e" .. vim.fn.expand("~/.local/share/nvim/scratch") .. "<CR>", { desc = "Scratch" })
+
+-- yank file name without extension
+vim.keymap.set("n", "<leader>y.", ":let @+ = expand('%:t:r')<CR>", { desc = "Yank name" })
 
 vim.keymap.set("n", "<leader>sl", function()
   vim.ui.select({
-    { label = "en", value = "en_us" },
+    { label = "en", value = "en" },
     { label = "pl", value = "pl" },
     { label = "turn off" },
   }, {
@@ -51,16 +54,20 @@ vim.keymap.set("n", "<leader>sl", function()
   end)
 end, { desc = "Choose spell lang" })
 
+vim.keymap.set("n", "<leader>Se", ":set spelllang=en_us<CR>")
+vim.keymap.set("n", "<leader>Sp", ":set spelllang=pl<CR>")
+
 -- change window to id
-local function change_window(x)
+---@param win_id integer
+local function change_window(win_id)
   local list = vim.api.nvim_list_wins()
   local windows = {}
   for _, id in ipairs(list) do
     local win = vim.api.nvim_win_get_number(id)
     windows[win] = id
   end
-  if windows[x] ~= nil then
-    vim.api.nvim_set_current_win(windows[x])
+  if windows[win_id] ~= nil then
+    vim.api.nvim_set_current_win(windows[win_id])
   end
 end
 

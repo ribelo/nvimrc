@@ -102,6 +102,7 @@ return {
       { "<leader>sS", ":Telescope grep_string<CR>", desc = "Grep string" },
       { "<leader>si", ":Telescope lsp_document_symbols<CR>", desc = "Document symbols" },
       { "<leader>sI", ":Telescope lsp_workspace_symbols<CR>", desc = "Workspace symbols" },
+      { "<leader>st", ":Telescope lsp_type_definitions<CR>", desc = "Workspace types" },
       { "<m-x>", ":Telescope commands<CR>", desc = "Commands" },
     },
   },

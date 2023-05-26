@@ -35,10 +35,14 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPre",
-    config = true,
+    enabled = true,
+    opts = { mode = "cursor" },
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      { "windwp/nvim-ts-autotag", opts = {} },
+    },
     opts = {
       ensure_installed = {
         "bash",
@@ -92,7 +96,10 @@ return {
         "yaml",
         -- "wgsl",
       },
-      highlight = { enable = true, additional_vim_regex_highlighting = { "org" } },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = { "org", "markdown" },
+      },
       indent = { enable = false },
       incremental_selection = {
         enable = true,

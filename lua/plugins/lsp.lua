@@ -1,18 +1,23 @@
----@diagnostic disable: no-unknown
+--- disable: no-unknown
 return {
+  -- tools
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "shellcheck",
+        "shfmt",
+      })
+    end,
+  },
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "simrat39/rust-tools.nvim",
-    },
     init = function()
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = {
         "<leader>ld",
-        function()
-          vim.diagnostic.open_float()
-        end,
+        vim.diagnostic.open_float,
         desc = "LSP Diagnostic Float",
       }
       keys[#keys + 1] = {
@@ -34,9 +39,7 @@ return {
       }
       keys[#keys + 1] = {
         "<leader>la",
-        function()
-          vim.lsp.buf.code_action()
-        end,
+        vim.lsp.buf.code_action,
         desc = "LSP Code Action",
       }
       keys[#keys + 1] = {
@@ -52,26 +55,49 @@ return {
         end,
         desc = "LSP Toggle Diagnostics",
       }
-      local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-      local diagnostics = require("lazyvim.config").icons.diagnostics
-      for type, _ in pairs(diagnostics) do
-        diagnostics[type] = signs[type]
-      end
+      vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
+      -- diagnostics = { virtual_text = { prefix = "icons" } },
       servers = {
         cssls = {},
         dockerls = {},
-        tsserver = {},
+        tsserver = {
+          single_file_support = false,
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "literal",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+          },
+        },
         html = {},
         marksman = { mason = false, cmd = { "marksman", "server" } },
         pyright = {},
         rust_analyzer = {
-          cmd = { "rust-analyzer" },
-          -- cmd = { "rustup", "run", "nightly", "rust-analyzer" },
           mason = false,
+          cmd = { "rust-analyzer" },
           settings = {
             ["rust-analyzer"] = {
+              procMacro = { enable = true },
               cargo = { allFeatures = true },
               checkOnSave = {
                 command = "clippy",
@@ -81,7 +107,13 @@ return {
           },
         },
         taplo = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
         lua_ls = {
           mason = false,
           cmd = { "lua-language-server" },
@@ -149,56 +181,46 @@ return {
           cmd = { "clojure-lsp" },
         },
       },
-      setup = {
-        rust_analyzer = function(_, opts)
-          require("lazyvim.util").on_attach(function(client, buffer)
-            if client.name == "rust_analyzer" then
-              -- stylua: ignore
-              vim.keymap.set("n", "<leader>co", ":RustHoverActions", { buffer = buffer, desc = "Hover Actions (Rust)" })
-              vim.keymap.set("n", "<leader>cR", "RustCodeActionGroup", { buffer = buffer, desc = "Code Action (Rust)" })
-            end
-          end)
-          local rust_opts = {
-            server = vim.tbl_deep_extend("force", {}, opts, opts.server or {}),
-            tools = { -- rust-tools options
-              -- options same as lsp hover / vim.lsp.util.open_floating_preview()
-              hover_actions = {
-                -- whether the hover action window gets automatically focused
-                auto_focus = true,
-              },
-            },
-          }
-          require("rust-tools").setup(rust_opts)
-          return true
-        end,
-      },
+      setup = {},
     },
   },
 
   -- null-ls
   {
     "jose-elias-alvarez/null-ls.nvim",
-    config = function()
+    opts = function(_, opts)
       local nls = require("null-ls")
-      nls.setup({
-        debounce = 150,
-        save_after_format = false,
-        sources = {
-          nls.builtins.formatting.stylua,
-          nls.builtins.diagnostics.gitlint,
-          nls.builtins.diagnostics.markdownlint,
-          -- nls.builtins.diagnostics.luacheck,
-          -- nls.builtins.formatting.prettierd.with({
-          --   filetypes = { "markdown" }, -- only runs `deno fmt` for markdown
-          -- }),
-          nls.builtins.diagnostics.selene.with({
-            condition = function(utils)
-              return utils.root_has_file({ "selene.toml" })
-            end,
-          }),
-          nls.builtins.code_actions.gitsigns,
-        },
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", ".git"),
+      vim.list_extend(opts.sources, {
+        -- nls.builtins.diagnostics.markdownlint,
+        nls.builtins.diagnostics.selene.with({
+          condition = function(utils)
+            return utils.root_has_file({ "selene.toml" })
+          end,
+        }),
+        nls.builtins.diagnostics.luacheck.with({
+          condition = function(utils)
+            return utils.root_has_file({ ".luacheckrc" })
+          end,
+        }),
+      })
+    end,
+  },
+  -- inlay hints
+  {
+    "lvimuser/lsp-inlayhints.nvim",
+    event = "LspAttach",
+    opts = {},
+    config = function(_, opts)
+      require("lsp-inlayhints").setup(opts)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("LspAttach_inlayhints", {}),
+        callback = function(args)
+          if not (args.data and args.data.client_id) then
+            return
+          end
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          require("lsp-inlayhints").on_attach(client, args.buf, true)
+        end,
       })
     end,
   },

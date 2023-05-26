@@ -45,7 +45,7 @@ function M.get()
         end,
         desc = "Source Action",
         has = "codeAction",
-      }
+      },
     }
     if require("lazyvim.util").has("inc-rename.nvim") then
       M._keys[#M._keys + 1] = {

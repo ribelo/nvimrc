@@ -4,12 +4,10 @@ return {
   "clojure-vim/vim-jack-in",
   "tpope/vim-dispatch",
   "radenling/vim-dispatch-neovim",
+  "dhruvasagar/vim-table-mode",
 
   {
-    dir = "/home/ribelo/projects/nvim_plugins/logseq.nvim/",
-  },
 
-  {
     dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
     -- "ribelo/taskwarrior.nvim",
     -- enabled = false,
@@ -147,7 +145,16 @@ return {
   },
 
   {
+    "echasnovski/mini.splitjoin",
+    opts = { mappings = { toggle = "J" } },
+    keys = {
+      { "J", desc = "Split/Join" },
+    },
+  },
+
+  {
     "Wansmer/treesj",
+    enabled = false,
     keys = {
       { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
     },
@@ -197,6 +204,7 @@ return {
 
   {
     "s1n7ax/nvim-window-picker",
+    enabled = true,
     opts = {
       selection_chars = "WESDUIOJKL",
       other_win_hl_color = "#BF616A",
@@ -217,55 +225,16 @@ return {
   },
 
   {
-    "mbbill/undotree",
-    keys = {
-      { "<leader>ut", ":UndotreeShow<CR>:UndotreeFocus<CR>" },
-    },
-  },
-
-  {
-    "dense-analysis/neural",
-    enabled = true,
-    opts = {
-      mappings = {
-        swift = "<c-x><c-s>",
-      },
-      open_ai = {
-        api_key = vim.fn.systemlist("echo $OPENAI_API_KEY")[1],
-      },
-    },
-  },
-  {
-    "jackMort/ChatGPT.nvim",
-    enabled = true,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = true,
-  },
-  {
-    -- TODO:
-    "anuvyklack/hydra.nvim",
-  },
-
-  {
-    "NMAC427/guess-indent.nvim",
-    config = true,
-  },
-
-  {
     "folke/todo-comments.nvim",
     opts = {
       keywords = {
-        FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
-        TODO = { icon = " ", color = "info" },
-        HACK = { icon = " ", color = "warning" },
-        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
+        TODO = { icon = " ", color = "info" },
+        HACK = { icon = " ", color = "warning" },
+        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        TEST = { icon = " ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
       },
     },
   },

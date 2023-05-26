@@ -26,13 +26,6 @@ return {
         routes = {
           {
             filter = {
-              event = "msg_show",
-              find = "matchup",
-            },
-            opts = { skip = true },
-          },
-          {
-            filter = {
               cond = function()
                 return not focused
               end,

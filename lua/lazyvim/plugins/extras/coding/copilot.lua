@@ -1,5 +1,4 @@
 return {
-
   -- copilot
   {
     "zbirenbaum/copilot.lua",
@@ -8,6 +7,9 @@ return {
     opts = {
       suggestion = { enabled = false },
       panel = { enabled = false },
+    },
+    keys = {
+      { "<leader>cP", "<cmd>Copilot panel<cr>", desc = "Copilot panel" },
     },
   },
   {
@@ -77,8 +79,8 @@ return {
           -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
           cmp.config.compare.exact,
           cmp.config.compare.score,
-          cmp.config.compare.recently_used,
-          cmp.config.compare.locality,
+          -- cmp.config.compare.recently_used,
+          -- cmp.config.compare.locality,
           cmp.config.compare.kind,
           cmp.config.compare.sort_text,
           cmp.config.compare.length,

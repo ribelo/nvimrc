@@ -26,8 +26,8 @@ end
 if vim.g.neovide then
   vim.opt.guifont = { "JetBrainsMono Nerd Font", "h9" }
   vim.g.neovide_scale_factor = 0.5
-  vim.g.neovide_cursor_animation_length = 0.03
-  vim.g.neovide_cursor_trail_length = 0
+  -- vim.g.neovide_cursor_animation_length = 0.03
+  -- vim.g.neovide_cursor_trail_length = 0
 end
 
 -- vim.opt.numberwidth = 2

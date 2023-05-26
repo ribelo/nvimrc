@@ -32,13 +32,4 @@ return {
       end)
     end,
   },
-  -- TODO:
-  -- {
-  --   "ggandor/leap.nvim",
-  --   dependencies = {
-  --     {
-  --       "ggandor/leap-spooky.nvim",
-  --     },
-  --   },
-  -- },
 }

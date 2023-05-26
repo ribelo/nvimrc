@@ -82,39 +82,18 @@ return {
   },
 
   {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    config = true,
-  },
-
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>r",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
-    config = true,
-  },
-
-  {
     "kkharji/sqlite.lua",
     enabled = function()
       return not jit.os:find("Windows")
     end,
     config = function()
-      local _path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
-      vim.cmd([[
-        let g:sqlite_clib_path = "/nix/store/0ssb3rn06pqn5qjms1ma9qcp10n2jjny-sqlite-3.41.2/lib/libsqlite3.so"
-      ]])
+      local path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
+      vim.cmd(string.format(
+        [[
+        let g:sqlite_clib_path = '%s'
+        ]],
+        path
+      ))
     end,
   },
   { "JoosepAlviste/nvim-ts-context-commentstring", lazy = false },
@@ -217,28 +196,15 @@ return {
       })
     end,
   },
-  -- copilot
-  {
-    "zbirenbaum/copilot.lua",
-    enabled = true,
-    cmd = "Copilot",
-    event = "InsertEnter",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
-    keys = {
-      { "<leader>cP", "<cmd>Copilot panel<cr>", desc = "Copilot panel" },
-    },
-  },
-
   {
     "simrat39/symbols-outline.nvim",
+    lazy = true,
     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
     config = true,
   },
   {
     "Olical/conjure",
+    lazy = false,
     config = function()
       vim.cmd([[
       let g:conjure#extract#tree_sitter#enabled = 1
@@ -246,8 +212,12 @@ return {
       let g:conjure#highlight#enabled = 1
       let g:conjure#highlight#timeout = 250
       let g:conjure#client#clojure#nrepl#connection#auto_repl#enabled = 0
-      let g:conjure#mapping#doc_word = ""
-      let g:conjure#mapping#def_word = ""
+      let g:conjure#client#clojure#nrepl#connection#auto_repl#cmd = ""
+      let g:conjure#mapping#def_str = v:false
+      let g:conjure#mapping#def_word = v:false
+      let g:conjure#mapping#doc_word = v:false
+      let g:conjure#mapping#doc_word = v:false
+      let g:conjure#mapping#def_word = v:false
       ]])
       vim.keymap.set("x", "<localleader>E", ":WhichKey ,<cr>", {})
     end,

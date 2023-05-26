@@ -30,6 +30,11 @@ return {
           -- prefix = "icons",
         },
         severity_sort = true,
+        float = {
+          border = "rounded",
+          style = "minimal",
+          winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+        },
       },
       -- add any global capabilities here
       capabilities = {},
@@ -176,8 +181,6 @@ return {
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
-          nls.builtins.formatting.fish_indent,
-          nls.builtins.diagnostics.fish,
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
           -- nls.builtins.diagnostics.flake8,
@@ -194,7 +197,6 @@ return {
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
       ensure_installed = {
-        "stylua",
         "shfmt",
         -- "flake8",
       },

@@ -2,6 +2,7 @@ return {
   -- animations
   {
     "echasnovski/mini.animate",
+    enabled = true,
     event = "VeryLazy",
     opts = function()
       -- don't use animate when scrolling with the mouse
@@ -16,10 +17,15 @@ return {
 
       local animate = require("mini.animate")
       return {
+        cursor = {
+          enable = false,
+        },
         resize = {
+          enable = false,
           timing = animate.gen_timing.linear({ duration = 100, unit = "total" }),
         },
         scroll = {
+          enable = true,
           timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
           subscroll = animate.gen_subscroll.equal({
             predicate = function(total_scroll)

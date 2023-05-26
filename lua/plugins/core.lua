@@ -5,6 +5,14 @@ return {
     version = false,
     opts = {
       colorscheme = "gruvbox-material",
+      icons = {
+        diagnostics = {
+          Error = " ",
+          Warn = " ",
+          Hint = " ",
+          Info = " ",
+        },
+      },
     },
   },
   { "folke/lazy.nvim", version = false },

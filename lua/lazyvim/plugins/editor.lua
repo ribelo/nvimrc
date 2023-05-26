@@ -214,6 +214,9 @@ return {
   },
   {
     "ggandor/leap.nvim",
+    dependencies = {
+      { "ggandor/leap-spooky.nvim" },
+    },
     keys = {
       { "s", mode = { "n", "x", "o" }, desc = "Leap forward to" },
       { "S", mode = { "n", "x", "o" }, desc = "Leap backward to" },
@@ -227,6 +230,8 @@ return {
       leap.add_default_mappings(true)
       vim.keymap.del({ "x", "o" }, "x")
       vim.keymap.del({ "x", "o" }, "X")
+      local leap_spooky = require("leap-spooky")
+      leap_spooky.setup({})
     end,
   },
 
