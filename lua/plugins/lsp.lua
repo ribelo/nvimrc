@@ -55,7 +55,7 @@ return {
         end,
         desc = "LSP Toggle Diagnostics",
       }
-      -- vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
+      vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
       -- diagnostics = { virtual_text = { prefix = "icons" } },
