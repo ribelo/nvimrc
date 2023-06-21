@@ -25,6 +25,7 @@ return {
         highlight! link @lsp.typemod.string.static.lua EnumConstant
         ]])
       end
+
       vim.api.nvim_create_augroup("GruvboxMaterialCustom", { clear = true })
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = function()

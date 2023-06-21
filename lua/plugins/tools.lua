@@ -99,8 +99,7 @@ return {
         expr = true,
         desc = "Goto file or Obsidian",
       },
-      { "<leader>oa", ":ObsidianAsLink<CR>", mode = { "v" }, desc = "Obsidian as node" },
-      { "<leader>ol", ":ObsidianLinkNew<CR>", mode = { "v" }, desc = "Obsidian make node" },
+      { "<leader>ol", ":ObsidianAsLink<CR>", mode = { "v" }, desc = "Obsidian as node" },
       {
         "<leader>oL",
         function()

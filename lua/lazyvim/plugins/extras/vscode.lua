@@ -5,7 +5,6 @@ end
 local enabled = {
   "flit.nvim",
   "lazy.nvim",
-  "leap.nvim",
   "mini.ai",
   "mini.comment",
   "mini.pairs",

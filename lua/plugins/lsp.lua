@@ -55,7 +55,7 @@ return {
         end,
         desc = "LSP Toggle Diagnostics",
       }
-      vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
+      -- vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
       -- diagnostics = { virtual_text = { prefix = "icons" } },
@@ -133,6 +133,7 @@ return {
                 },
               },
               diagnostics = {
+                disable = { "incomplete-signature-doc" },
                 -- enable = false,
                 groupSeverity = {
                   strong = "Warning",
@@ -162,6 +163,11 @@ return {
                   continuation_indent_size = "2",
                 },
               },
+              hint = {
+                enable = true,
+                setType = true,
+                arrayIndex = "Disable",
+              },
             },
           },
         },
@@ -172,6 +178,15 @@ return {
               includeLanguages = { "clojure", "javascript" },
               experimental = {
                 classRegex = { ':class\\s+"([^"]*)"' },
+              },
+            },
+          },
+        },
+        nil_ls = {
+          settings = {
+            ["nil"] = {
+              formatting = {
+                command = { "nixpkgs-fmt" },
               },
             },
           },
@@ -208,6 +223,8 @@ return {
   -- inlay hints
   {
     "lvimuser/lsp-inlayhints.nvim",
+    -- branch = "anticonceal",
+    enabled = false,
     event = "LspAttach",
     opts = {},
     config = function(_, opts)
@@ -219,7 +236,7 @@ return {
             return
           end
           local client = vim.lsp.get_client_by_id(args.data.client_id)
-          require("lsp-inlayhints").on_attach(client, args.buf, true)
+          require("lsp-inlayhints").on_attach(client, args.buf)
         end,
       })
     end,

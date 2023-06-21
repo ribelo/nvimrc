@@ -7,6 +7,10 @@ return {
   "dhruvasagar/vim-table-mode",
 
   {
+    dir = "/home/ribelo/projects/nvim_plugins/table.nvim/",
+  },
+
+  {
 
     dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
     -- "ribelo/taskwarrior.nvim",

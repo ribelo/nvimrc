@@ -57,13 +57,16 @@ return {
       },
       {
         "ahmedkhalf/project.nvim",
-        opts = {
-          sync_root_with_cwd = true,
-          respect_buf_cwd = true,
-          silent_chdir = true,
-          ignore_lsp = { "tailwindcss", "null-ls", "lua_ls" },
-          patterns = { "deps.edn", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
-        },
+        opts = function(_, opts)
+          vim.print({ opts = opts })
+          return vim.tbl_extend("force", opts, {
+            sync_root_with_cwd = true,
+            respect_buf_cwd = true,
+            silent_chdir = true,
+            ignore_lsp = { "tailwindcss", "null-ls", "lua_ls" },
+            patterns = { "deps.edn", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
+          })
+        end,
         config = function(_, opts)
           require("telescope").load_extension("projects")
           require("project_nvim").setup(opts)
