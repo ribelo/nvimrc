@@ -23,6 +23,7 @@ return {
         highlight! link @lsp.type.variable @variable
         highlight! link @lsp.typemod.keyword.documentation.lua @lsp.type.typeParameter
         highlight! link @lsp.typemod.string.static.lua EnumConstant
+        highlight! link LspInlayHint LineNr
         ]])
       end
 
