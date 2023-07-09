@@ -20,6 +20,7 @@ return {
         illuminate = true,
         indent_blankline = { enabled = true },
         lsp_trouble = true,
+        mason = true,
         mini = true,
         native_lsp = {
           enabled = true,
@@ -34,7 +35,7 @@ return {
         neotest = true,
         noice = true,
         notify = true,
-        nvimtree = true,
+        neotree = true,
         semantic_tokens = true,
         telescope = true,
         treesitter = true,
