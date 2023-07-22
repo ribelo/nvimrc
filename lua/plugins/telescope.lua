@@ -106,6 +106,7 @@ return {
       { "<leader>si", ":Telescope lsp_document_symbols<CR>", desc = "Document symbols" },
       { "<leader>sI", ":Telescope lsp_workspace_symbols<CR>", desc = "Workspace symbols" },
       { "<leader>st", ":Telescope lsp_type_definitions<CR>", desc = "Workspace types" },
+      { "<leader>gb", ":Telescope git_branches<CR>", desc = "Git Branches" },
       { "<m-x>", ":Telescope commands<CR>", desc = "Commands" },
     },
   },
