@@ -26,6 +26,13 @@ return {
         routes = {
           {
             filter = {
+              event = "msg_show",
+              find = "inlay_hints",
+            },
+            opts = { skip = true },
+          },
+          {
+            filter = {
               cond = function()
                 return not focused
               end,
@@ -45,8 +52,21 @@ return {
           bottom_search = true,
           command_palette = true,
           long_message_to_split = true,
-          inc_rename = true,
+          inc_rename = false,
           cmdline_output_to_split = false,
+          lsp_doc_border = {
+            views = {
+              hover = {
+                border = {
+                  style = "rounded",
+                },
+                position = { row = 2, col = 2 },
+                win_options = {
+                  winhighlight = "NormalFloat:Normal,FloatBorder:CmpMenuBorder",
+                },
+              },
+            },
+          },
         },
         commands = {
           all = {
@@ -61,6 +81,20 @@ return {
             icons = false,
           },
         },
+        -- views = {
+        --   popup = {
+        --     border = {
+        --       padding = {1, 1},
+        --       style = "rounded",
+        --     },
+        --     win_options = {
+        --       winhighlight = {
+        --         Normal = "NormalFloat:Normal,FloatBorder:CmpMenuBorder",
+        --         FloatBorder = "NormalFloat:Normal,FloatBorder:CmpMenuBorder"
+        --       },
+        --     }
+        --   }
+        -- }
       })
 
       vim.api.nvim_create_autocmd("FileType", {

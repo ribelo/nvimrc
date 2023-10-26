@@ -30,7 +30,6 @@ local markdown_injections = {
 }
 
 return {
-  { "mrjones2014/nvim-ts-rainbow" },
   { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
   {
     "nvim-treesitter/nvim-treesitter-context",
@@ -110,29 +109,10 @@ return {
           node_decremental = "<tab>",
         },
       },
-      textobjects = {
-        select = {
-          enable = true,
-          keymaps = {
-            ["af"] = "function.outer",
-            ["if"] = "function.inner",
-            ["ac"] = "class.outer",
-            ["id"] = "class.inner",
-            ["iP"] = "parameter.inner",
-            ["aP"] = "@parameter.outer",
-          },
-        },
-        swap = { enable = true },
-        move = { enable = true },
-      },
       query_linter = {
         enable = true,
         use_virtual_text = true,
         lint_events = { "BufWrite", "CursorHold" },
-      },
-      context_commentstring = {
-        enable = false,
-        enable_autocmd = true,
       },
       matchup = {
         enable = true,

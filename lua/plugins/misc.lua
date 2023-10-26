@@ -1,10 +1,12 @@
 return {
+  "mbbill/undotree",
   "folke/twilight.nvim",
   "lambdalisue/suda.vim",
   "clojure-vim/vim-jack-in",
   "tpope/vim-dispatch",
   "radenling/vim-dispatch-neovim",
   "dhruvasagar/vim-table-mode",
+  { "NMAC427/guess-indent.nvim", config = true },
 
   {
     dir = "/home/ribelo/projects/nvim_plugins/table.nvim/",
@@ -149,16 +151,8 @@ return {
   },
 
   {
-    "echasnovski/mini.splitjoin",
-    opts = { mappings = { toggle = "J" } },
-    keys = {
-      { "J", desc = "Split/Join" },
-    },
-  },
-
-  {
     "Wansmer/treesj",
-    enabled = false,
+    enabled = true,
     keys = {
       { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
     },
@@ -204,28 +198,6 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     enabled = false,
-  },
-
-  {
-    "s1n7ax/nvim-window-picker",
-    enabled = true,
-    opts = {
-      selection_chars = "WESDUIOJKL",
-      other_win_hl_color = "#BF616A",
-      use_winbar = "always",
-      show_prompt = false,
-    },
-    keys = {
-      {
-        "<leader>ww",
-        function()
-          local win_id = require("window-picker").pick_window()
-          if type(win_id) == "number" then
-            vim.api.nvim_set_current_win(win_id)
-          end
-        end,
-      },
-    },
   },
 
   {

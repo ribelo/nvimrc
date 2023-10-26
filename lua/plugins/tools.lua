@@ -1,5 +1,5 @@
 return {
-  "https://github.com/tpope/vim-fugitive",
+  { "tpope/vim-fugitive" },
   {
     -- "epwalsh/obsidian.nvim",
     dir = "/home/ribelo/projects/nvim_plugins/obsidian.nvim/",
@@ -128,18 +128,19 @@ return {
     },
   } },
   {
-    "TimUntersberger/neogit",
+    "NeogitOrg/neogit",
     opts = {
       disable_commit_confirmation = true,
       auto_show_console = false,
       integrations = {
         diffview = true,
+        telescope = true,
       },
     },
     config = true,
     keys = {
       {
-        "<leader>gn",
+        "<leader>gg",
         function()
           require("neogit").open()
         end,

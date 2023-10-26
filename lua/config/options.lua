@@ -24,10 +24,11 @@ if vim.fn.has("nvim-0.8") == 1 then
 end
 
 if vim.g.neovide then
-  vim.opt.guifont = { "JetBrainsMono Nerd Font", "h9" }
-  vim.g.neovide_scale_factor = 0.5
-  -- vim.g.neovide_cursor_animation_length = 0.03
-  -- vim.g.neovide_cursor_trail_length = 0
+  vim.opt.guifont = { "JetBrainsMono Nerd Font", "h12" }
+  vim.g.neovide_scale_factor = 0.9
+  vim.g.neovide_scroll_animation_length = 0.3
+  vim.g.neovide_cursor_animation_length = 0.03
+  vim.g.neovide_cursor_trail_length = 0
 end
 
 -- vim.opt.numberwidth = 2

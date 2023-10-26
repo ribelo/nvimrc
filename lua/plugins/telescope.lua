@@ -3,7 +3,6 @@ return {
     "nvim-telescope/telescope.nvim",
     version = false,
     opts = {
-      file_sorter = require("telescope.sorters").get_fzy_sorter(),
       defaults = {
         mappings = {
           i = {
@@ -25,16 +24,23 @@ return {
       "nvim-telescope/telescope-symbols.nvim",
       "chip/telescope-software-licenses.nvim",
       {
-        "nvim-telescope/telescope-file-browser.nvim",
+        "debugloop/telescope-undo.nvim",
+        keys = { { "<leader>U", "<cmd>Telescope undo<cr>" } },
         config = function()
-          require("telescope").load_extension("file_browser")
+          require("telescope").load_extension("undo")
         end,
       },
       {
-        "nvim-telescope/telescope-fzy-native.nvim",
+        "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
         config = function()
-          require("telescope").load_extension("fzy_native")
+          require("telescope").load_extension("fzf")
+        end,
+      },
+      {
+        "nvim-telescope/telescope-file-browser.nvim",
+        config = function()
+          require("telescope").load_extension("file_browser")
         end,
       },
       {
@@ -58,12 +64,12 @@ return {
       {
         "ahmedkhalf/project.nvim",
         opts = function(_, opts)
-          vim.print({ opts = opts })
           return vim.tbl_extend("force", opts, {
+            manual_mode = false,
             sync_root_with_cwd = true,
             respect_buf_cwd = true,
-            silent_chdir = true,
-            ignore_lsp = { "tailwindcss", "null-ls", "lua_ls" },
+            silent_chdir = false,
+            ignore_lsp = { "tailwindcss", "lua_ls" },
             patterns = { "deps.edn", "project.clj", ".shadow-cljs", ".git", "package.json", "Cargo.toml" },
           })
         end,

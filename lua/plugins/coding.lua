@@ -87,7 +87,9 @@ return {
       return not jit.os:find("Windows")
     end,
     config = function()
-      local path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
+      -- local path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
+      local path = "/nix/store/fmh3s032bcsbfcdp82zsjlmkj1kp72j6-sqlite-3.43.1/lib/libsqlite3.so"
+      vim.print({ path = path })
       vim.cmd(string.format(
         [[
         let g:sqlite_clib_path = '%s'
@@ -100,6 +102,7 @@ return {
   -- better yank/paste
   {
     "gbprod/yanky.nvim",
+    dependencies = { "kkharji/sqlite.lua" },
     enabled = true,
     event = "BufReadPost",
     config = function()
@@ -203,6 +206,30 @@ return {
     config = true,
   },
   {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {
+      label = {
+        after = false,
+        before = true,
+      },
+      modes = {
+        search = {
+          enabled = false,
+        },
+      },
+    },
+    -- stylua: ignore
+    keys = {
+      { "s", mode = { "n", "o", "x" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
+  },
+  {
     "Olical/conjure",
     lazy = false,
     config = function()
@@ -220,6 +247,66 @@ return {
       let g:conjure#mapping#def_word = v:false
       ]])
       vim.keymap.set("x", "<localleader>E", ":WhichKey ,<cr>", {})
+    end,
+  },
+  {
+    "nvim-cmp",
+    dependencies = { "hrsh7th/cmp-emoji" },
+    ---@param opts cmp.ConfigSchema
+    opts = function(_, opts)
+      local cmp = require("cmp")
+      local unlinkgrp = vim.api.nvim_create_augroup("UnlinkSnippetOnModeChange", { clear = true })
+      local luasnip = require("luasnip")
+      vim.api.nvim_create_autocmd("ModeChanged", {
+        group = unlinkgrp,
+        pattern = { "s:n", "i:*" },
+        desc = "Forget the current snippet when leaving the insert mode",
+        callback = function(evt)
+          if luasnip.session and luasnip.session.current_nodes[evt.buf] and not luasnip.session.jump_active then
+            luasnip.unlink_current()
+          end
+        end,
+      })
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+      opts.style = {
+        winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      }
+      local borderstyle = {
+        border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        scrollbar = "║",
+        winhighlight = "NormalFloat:Normal,FloatBorder:CmpMenuBorder",
+      }
+      opts.window = {
+        completion = borderstyle,
+        documentation = borderstyle,
+      }
+      opts.mapping = cmp.mapping.preset.insert({
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-u>"] = cmp.mapping.scroll_docs(4),
+        ["<C-x><C-f>"] = cmp.mapping.complete({ config = { sources = { { name = "path" } } } }),
+        ["<C-x><C-o>"] = cmp.mapping.complete({ config = { sources = { { name = "nvim_lsp" } } } }),
+        ["<C-x><C-p>"] = cmp.mapping.complete({ config = { sources = { { name = "copilot" } } } }),
+        ["<C-j>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            if type(fallback) == "function" then
+              fallback()
+            end
+          end
+        end, { "i", "s", "c" }),
+        ["<C-k>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            if type(fallback) == "function" then
+              fallback()
+            end
+          end
+        end, { "i", "s", "c" }),
+      })
     end,
   },
 }

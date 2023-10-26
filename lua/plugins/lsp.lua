@@ -4,6 +4,12 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
+      ---@type table
+      local ensure_not_instaled = { "stylua" }
+      ---@param x string
+      opts.ensure_installed = vim.tbl_filter(function(x)
+        return not vim.list_contains(ensure_not_instaled, x)
+      end, opts.ensure_installed)
       vim.list_extend(opts.ensure_installed, {
         "shellcheck",
         "shfmt",
@@ -14,6 +20,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     init = function()
+      -- vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
+      -- vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+
       local keys = require("lazyvim.plugins.lsp.keymaps").get()
       keys[#keys + 1] = {
         "<leader>ld",
@@ -27,13 +36,13 @@ return {
       }
       keys[#keys + 1] = {
         "<leader>lf",
-        require("lazyvim.plugins.lsp.format").format,
+        require("lazyvim.util").format.format,
         mode = { "n" },
         desc = "LSP Format",
       }
       keys[#keys + 1] = {
         "<leader>lf",
-        require("lazyvim.plugins.lsp.format").format,
+        require("lazyvim.util").format.format,
         mode = { "v" },
         desc = "LSP Format Range",
       }
@@ -58,7 +67,17 @@ return {
       -- vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
-      -- diagnostics = { virtual_text = { prefix = "icons" } },
+      diagnostics = {
+        virtual_text = { prefix = "icons" },
+        float = {
+          -- focusable = false,
+          style = "minimal",
+          border = "rounded",
+          source = "always",
+          header = "",
+          prefix = "",
+        },
+      },
       servers = {
         cssls = {},
         dockerls = {},
@@ -94,6 +113,17 @@ return {
         pyright = {},
         rust_analyzer = {
           mason = false,
+          cmd = { "rust-analyzer" },
+          -- settings = {
+          --   ["rust-analyzer"] = {
+          --     procMacro = { enable = true },
+          --     cargo = { allFeatures = true },
+          --     checkOnSave = {
+          --       command = "clippy",
+          --       extraArgs = { "--no-deps" },
+          --     },
+          --   },
+          -- },
         },
         taplo = {},
         yamlls = {
@@ -118,11 +148,25 @@ return {
               },
               misc = {
                 parameters = {
-                  "--log-level=trace",
+                  -- "--log-level=trace",
                 },
               },
+              hint = {
+                enable = true,
+                setType = false,
+                paramType = true,
+                paramName = "Disable",
+                semicolon = "Disable",
+                arrayIndex = "Disable",
+              },
+              doc = {
+                privateName = { "^_" },
+              },
+              type = {
+                castNumberToInteger = true,
+              },
               diagnostics = {
-                disable = { "incomplete-signature-doc" },
+                disable = { "incomplete-signature-doc", "trailing-space" },
                 -- enable = false,
                 groupSeverity = {
                   strong = "Warning",
@@ -152,11 +196,6 @@ return {
                   continuation_indent_size = "2",
                 },
               },
-              hint = {
-                enable = true,
-                setType = true,
-                arrayIndex = "Disable",
-              },
             },
           },
         },
@@ -171,15 +210,6 @@ return {
             },
           },
         },
-        nil_ls = {
-          settings = {
-            ["nil"] = {
-              formatting = {
-                command = { "nixpkgs-fmt" },
-              },
-            },
-          },
-        },
         clojure_lsp = {
           mason = false,
           cmd = { "clojure-lsp" },
@@ -188,25 +218,64 @@ return {
       setup = {},
     },
   },
-
-  -- null-ls
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      vim.list_extend(opts.sources, {
-        -- nls.builtins.diagnostics.markdownlint,
-        nls.builtins.diagnostics.selene.with({
-          condition = function(utils)
-            return utils.root_has_file({ "selene.toml" })
+    "neovim/nvim-lspconfig",
+    opts = {
+      diagnostics = { virtual_text = { prefix = "icons" } },
+    },
+    -- config = function()
+    --   local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+    --   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    --     border = border,
+    --   })
+    --
+    --   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    --     border = border,
+    --   })
+    -- end,
+  },
+
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        ["markdown"] = { { "prettierd", "prettier" } },
+        ["markdown.mdx"] = { { "prettierd", "prettier" } },
+        ["nix"] = { "nixpkgs-fmt" },
+        -- ["javascript"] = { "dprint" },
+        -- ["javascriptreact"] = { "dprint" },
+        -- ["typescript"] = { "dprint" },
+        -- ["typescriptreact"] = { "dprint" },
+      },
+      formatters = {
+        dprint = {
+          condition = function(ctx)
+            return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
           end,
-        }),
-        nls.builtins.diagnostics.luacheck.with({
-          condition = function(utils)
-            return utils.root_has_file({ ".luacheckrc" })
+        },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        lua = { "selene", "luacheck" },
+        markdown = { "markdownlint" },
+      },
+      linters = {
+        selene = {
+          condition = function(ctx)
+            return vim.fs.find({ "selene.toml" }, { path = ctx.filename, upward = true })[1]
           end,
-        }),
-      })
-    end,
+        },
+        luacheck = {
+          condition = function(ctx)
+            return vim.fs.find({ ".luacheckrc" }, { path = ctx.filename, upward = true })[1]
+          end,
+        },
+      },
+    },
   },
 }
