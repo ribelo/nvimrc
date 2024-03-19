@@ -44,12 +44,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
-vim.api.nvim_create_autocmd("BufWritePost", {
-  group = vim.api.nvim_create_augroup("md_calcdown", { clear = true }),
-  pattern = "*.md",
-  callback = function(event)
-    local file = vim.loop.fs_realpath(event.match) or event.match
-    local cmd = "!calcdown -i " .. file .. " --replace"
-    vim.api.nvim_command(cmd)
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+--   group = vim.api.nvim_create_augroup("md_calcdown", { clear = true }),
+--   pattern = "*.md",
+--   callback = function(event)
+--     local file = vim.loop.fs_realpath(event.match) or event.match
+--     local cmd = "!calcdown -i " .. file .. " --replace"
+--     vim.api.nvim_command(cmd)
+--   end,
+-- })

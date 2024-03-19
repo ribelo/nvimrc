@@ -24,11 +24,18 @@ if vim.fn.has("nvim-0.8") == 1 then
 end
 
 if vim.g.neovide then
-  vim.opt.guifont = { "JetBrainsMono Nerd Font", "h12" }
-  vim.g.neovide_scale_factor = 0.9
+  vim.opt.guifont = "JetBrainsMono Nerd Font:h13"
+  vim.g.neovide_scale_factor = 1.0
   vim.g.neovide_scroll_animation_length = 0.3
   vim.g.neovide_cursor_animation_length = 0.03
   vim.g.neovide_cursor_trail_length = 0
+  if vim.g.neovide then
+    vim.keymap.set("v", "<C-S-C>", '"+y') -- Copy
+    vim.keymap.set("n", "<C-S-V>", '"+P') -- Paste normal mode
+    vim.keymap.set("v", "<C-S-V>", '"+P') -- Paste visual mode
+    vim.keymap.set("c", "<C-S-V>", "<C-R>+") -- Paste command mode
+    vim.keymap.set("i", "<C-S-V>", '<ESC>l"+Pli') -- Paste insert mode
+  end
 end
 
 -- vim.opt.numberwidth = 2

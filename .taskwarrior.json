@@ -1,0 +1,37 @@
+{
+  "description": [
+    {
+      "regex": "https:\/\/github.com\/([^\/]+\/[^\/]+)",
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ]
+    },
+    {
+      "text": ":"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--abbrev-ref",
+        "HEAD"
+      ]
+    }
+  ],
+  "project": [
+    {
+      "text": "ribelo"
+    }
+  ],
+  "tags": [
+    {
+      "text": "nvim_config"
+    },
+    {
+      "text": "procastination"
+    }
+  ]
+}

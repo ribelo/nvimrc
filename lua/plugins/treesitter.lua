@@ -31,6 +31,7 @@ local markdown_injections = {
 
 return {
   { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
+  { "IndianBoy42/tree-sitter-just", config = true },
   {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPre",

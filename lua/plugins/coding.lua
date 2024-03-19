@@ -87,9 +87,8 @@ return {
       return not jit.os:find("Windows")
     end,
     config = function()
-      -- local path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
-      local path = "/nix/store/fmh3s032bcsbfcdp82zsjlmkj1kp72j6-sqlite-3.43.1/lib/libsqlite3.so"
-      vim.print({ path = path })
+      local path = vim.fn.systemlist("echo $SQLITE_PATH")[1]
+      -- local path = "/nix/store/fmh3s032bcsbfcdp82zsjlmkj1kp72j6-sqlite-3.43.1/lib/libsqlite3.so"
       vim.cmd(string.format(
         [[
         let g:sqlite_clib_path = '%s'

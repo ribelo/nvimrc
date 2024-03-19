@@ -8,6 +8,9 @@ return {
           i = {
             ["<c-j>"] = require("telescope.actions").move_selection_next,
             ["<c-k>"] = require("telescope.actions").move_selection_previous,
+            ["<C-S-V>"] = function()
+              vim.api.nvim_put({ vim.fn.getreg("+") }, "", true, true)
+            end,
           },
           n = {
             ["q"] = require("telescope.actions").close,

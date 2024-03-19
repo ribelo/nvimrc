@@ -5,7 +5,6 @@ return {
   "clojure-vim/vim-jack-in",
   "tpope/vim-dispatch",
   "radenling/vim-dispatch-neovim",
-  "dhruvasagar/vim-table-mode",
   { "NMAC427/guess-indent.nvim", config = true },
 
   {
@@ -148,15 +147,6 @@ return {
       { "<leader>cp", ":PrompterBrowser<cr>", mode = { "n", "x" }, desc = "Prompter browser" },
     },
     config = true,
-  },
-
-  {
-    "Wansmer/treesj",
-    enabled = true,
-    keys = {
-      { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-    },
-    opts = { use_default_keymaps = false, max_join_length = 150 },
   },
 
   {

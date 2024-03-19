@@ -14,7 +14,7 @@ return {
 
   {
     "echasnovski/mini.animate",
-    enabled = true,
+    enabled = false,
     event = "VeryLazy",
     opts = {
       cursor = {
@@ -30,7 +30,7 @@ return {
         enable = false,
       },
       scroll = {
-        enable = not vim.g.neovide,
+        enable = false,
       },
     },
   },

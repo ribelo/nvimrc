@@ -64,10 +64,34 @@ return {
         end,
         desc = "LSP Toggle Diagnostics",
       }
+      keys[#keys + 1] = {
+        "<leader>lR",
+        function()
+          vim.diagnostic.config({
+            signs = {
+              text = {
+                [vim.diagnostic.severity.ERROR] = require("lazyvim.config").icons.diagnostics.Error,
+                [vim.diagnostic.severity.WARN] = require("lazyvim.config").icons.diagnostics.Warn,
+                [vim.diagnostic.severity.HINT] = require("lazyvim.config").icons.diagnostics.Hint,
+                [vim.diagnostic.severity.INFO] = require("lazyvim.config").icons.diagnostics.Info,
+              },
+            },
+          })
+        end,
+        desc = "LSP Toggle Diagnostics",
+      }
       -- vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
       diagnostics = {
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = require("lazyvim.config").icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = require("lazyvim.config").icons.diagnostics.Warn,
+            [vim.diagnostic.severity.HINT] = require("lazyvim.config").icons.diagnostics.Hint,
+            [vim.diagnostic.severity.INFO] = require("lazyvim.config").icons.diagnostics.Info,
+          },
+        },
         virtual_text = { prefix = "icons" },
         float = {
           -- focusable = false,
@@ -109,6 +133,7 @@ return {
           },
         },
         html = {},
+        -- jdtls = { mason = false, cmd = { "jdt-language-server" } },
         marksman = { mason = false, cmd = { "marksman", "server" } },
         pyright = {},
         rust_analyzer = {
@@ -200,12 +225,12 @@ return {
           },
         },
         tailwindcss = {
-          filetypes = { "clojure" },
+          filetypes = { "clojure", "rust" },
           settings = {
             tailwindCSS = {
-              includeLanguages = { "clojure", "javascript" },
+              includeLanguages = { "rust", "clojure", "javascript" },
               experimental = {
-                classRegex = { ':class\\s+"([^"]*)"' },
+                classRegex = { ':class\\s+"([^"]*)"', 'class: "(.*)"' },
               },
             },
           },
@@ -218,23 +243,6 @@ return {
       setup = {},
     },
   },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      diagnostics = { virtual_text = { prefix = "icons" } },
-    },
-    -- config = function()
-    --   local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-    --   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    --     border = border,
-    --   })
-    --
-    --   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    --     border = border,
-    --   })
-    -- end,
-  },
-
   {
     "stevearc/conform.nvim",
     optional = true,

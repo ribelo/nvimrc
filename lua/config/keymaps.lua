@@ -78,3 +78,12 @@ for i = 1, 6, 1 do
   end
   vim.keymap.set("n", lhs, rhs, { desc = "Move to window " .. i })
 end
+
+-- toggle backups
+local backup_state = vim.o.backup
+vim.keymap.set("n", "<leader>tb", function()
+  vim.o.backup = not backup_state
+  vim.o.writebackup = not backup_state
+  backup_state = vim.o.backup
+  vim.notify("Backup " .. (backup_state and "enabled" or "disabled"))
+end, { desc = "Toggle backup" })
