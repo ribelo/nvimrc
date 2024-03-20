@@ -7,14 +7,14 @@ return {
   "radenling/vim-dispatch-neovim",
   { "NMAC427/guess-indent.nvim", config = true },
 
-  {
-    dir = "/home/ribelo/projects/nvim_plugins/table.nvim/",
-  },
+  -- {
+  --   dir = "/home/ribelo/projects/nvim_plugins/table.nvim/",
+  -- },
 
   {
 
-    dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
-    -- "ribelo/taskwarrior.nvim",
+    -- dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
+    "ribelo/taskwarrior.nvim",
     -- enabled = false,
     event = "BufReadPost",
     opts = {},
@@ -41,7 +41,8 @@ return {
   },
 
   {
-    dir = "/home/ribelo/projects/nvim_plugins/pareto.nvim/",
+    -- dir = "/home/ribelo/projects/nvim_plugins/pareto.nvim/",
+    "ribelo/pareto.nvim",
     keys = {
       {
         "<m-l>",
@@ -141,8 +142,8 @@ return {
   },
 
   {
-    -- "ribelo/prompter.nvim",
-    dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
+    "ribelo/prompter.nvim",
+    -- dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
     keys = {
       { "<leader>cp", ":PrompterBrowser<cr>", mode = { "n", "x" }, desc = "Prompter browser" },
     },
