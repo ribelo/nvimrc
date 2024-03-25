@@ -192,8 +192,11 @@ return {
           augend.integer.alias.hex,
           augend.date.alias["%Y/%m/%d"],
           augend.date.alias["%Y-%m-%d"],
+          augend.date.alias["%H:%M"],
+          augend.date.alias["%H:%M:%S"],
           augend.constant.alias.bool,
           augend.semver.alias.semver,
+          augend.misc.alias.markdown_header,
         },
       })
     end,

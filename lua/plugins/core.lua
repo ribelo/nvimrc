@@ -2,7 +2,6 @@
 return {
   {
     "LazyVim/LazyVim",
-    version = false,
     opts = {
       colorscheme = "gruvbox-material",
       icons = {

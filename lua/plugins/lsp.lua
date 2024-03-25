@@ -1,11 +1,21 @@
 --- disable: no-unknown
+
+require("neodev").setup({
+  override = function(_, library)
+    library.enabled = true
+    library.plugins = true
+  end,
+})
+
 return {
-  -- tools
+  {
+    "folke/neodev.nvim",
+  },
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       ---@type table
-      local ensure_not_instaled = { "stylua" }
+      local ensure_not_instaled = { "stylua", "lua-language-server", "rust-analyzer" }
       ---@param x string
       opts.ensure_installed = vim.tbl_filter(function(x)
         return not vim.list_contains(ensure_not_instaled, x)
@@ -83,24 +93,9 @@ return {
       -- vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
+      inlay_hints = { enabled = true },
       diagnostics = {
-        signs = {
-          text = {
-            [vim.diagnostic.severity.ERROR] = require("lazyvim.config").icons.diagnostics.Error,
-            [vim.diagnostic.severity.WARN] = require("lazyvim.config").icons.diagnostics.Warn,
-            [vim.diagnostic.severity.HINT] = require("lazyvim.config").icons.diagnostics.Hint,
-            [vim.diagnostic.severity.INFO] = require("lazyvim.config").icons.diagnostics.Info,
-          },
-        },
         virtual_text = { prefix = "icons" },
-        float = {
-          -- focusable = false,
-          style = "minimal",
-          border = "rounded",
-          source = "always",
-          header = "",
-          prefix = "",
-        },
       },
       servers = {
         cssls = {},
@@ -176,6 +171,7 @@ return {
                   -- "--log-level=trace",
                 },
               },
+              hover = { expandAlias = false },
               hint = {
                 enable = true,
                 setType = false,
@@ -214,7 +210,7 @@ return {
                 unusedLocalExclude = { "_*" },
               },
               format = {
-                enable = false,
+                enable = true,
                 defaultConfig = {
                   indent_style = "space",
                   indent_size = "2",

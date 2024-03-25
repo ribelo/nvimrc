@@ -1,8 +1,8 @@
 return {
-  { "tpope/vim-fugitive" },
+  -- { "tpope/vim-fugitive" },
   {
-    -- "epwalsh/obsidian.nvim",
-    dir = "/home/ribelo/projects/nvim_plugins/obsidian.nvim/",
+    "epwalsh/obsidian.nvim",
+    -- dir = "/home/ribelo/projects/nvim_plugins/obsidian.nvim/",
     lazy = true,
     event = { "BufReadPre " .. vim.fn.expand("~/vault/**.md") },
     dependencies = {
@@ -34,6 +34,7 @@ return {
         local suffix = ""
         if title ~= nil then
           -- If title is given, transform it into valid file name.
+          ---@type string
           suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
         else
           -- If title is nil, just add 4 random uppercase letters to the suffix.

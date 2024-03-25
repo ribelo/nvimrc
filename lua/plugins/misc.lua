@@ -7,10 +7,6 @@ return {
   "radenling/vim-dispatch-neovim",
   { "NMAC427/guess-indent.nvim", config = true },
 
-  -- {
-  --   dir = "/home/ribelo/projects/nvim_plugins/table.nvim/",
-  -- },
-
   {
 
     -- dir = "/home/ribelo/projects/nvim_plugins/taskwarrior.nvim/",
@@ -142,10 +138,73 @@ return {
   },
 
   {
-    "ribelo/prompter.nvim",
+    -- "ribelo/prompter.nvim",
+    dir = "/home/ribelo/projects/ribelo/prompter.nvim/",
     -- dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
     keys = {
-      { "<leader>cp", ":PrompterBrowser<cr>", mode = { "n", "x" }, desc = "Prompter browser" },
+      {
+        "<leader>as",
+        function()
+          require("prompter_nvim").browser()
+        end,
+        mode = { "n", "x", "v" },
+        desc = "Prompter browser",
+      },
+      {
+        "<leader>aa",
+        function()
+          require("prompter_nvim").push_prompt()
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+          vim.notify("Chunk added")
+        end,
+        mode = { "v" },
+        desc = "Push prompt",
+      },
+      {
+        "<leader>aA",
+        function()
+          local tag = vim.fn.input("Enter tag: ")
+          require("prompter_nvim").push_prompt(tag)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+          vim.notify("Chunk added")
+        end,
+        mode = { "v" },
+        desc = "Push prompt",
+      },
+      {
+        "<leader>ax",
+        function()
+          require("prompter_nvim").pop_prompt()
+          vim.notify("Chunk removed")
+        end,
+        mode = { "v" },
+        desc = "Pop prompt",
+      },
+      {
+        "<leader>ac",
+        function()
+          require("prompter_nvim").clear_prompt()
+          vim.notify("Prompt cleared")
+        end,
+        mode = { "n" },
+        desc = "Clear prompt",
+      },
+      {
+        "<leader>at",
+        function()
+          require("prompter_nvim").add_tag()
+        end,
+        mode = { "n", "v" },
+        desc = "Add tag",
+      },
+      {
+        "<leader>av",
+        function()
+          require("prompter_nvim").open_prompt_buffer()
+        end,
+        mode = { "n", "x" },
+        desc = "Show prompt",
+      },
     },
     config = true,
   },
