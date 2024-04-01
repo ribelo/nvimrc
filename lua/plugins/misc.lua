@@ -164,9 +164,12 @@ return {
         "<leader>aA",
         function()
           local tag = vim.fn.input("Enter tag: ")
-          require("prompter_nvim").push_prompt(tag)
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
-          vim.notify("Chunk added")
+          local description = vim.fn.input("Enter description: ")
+          if tag and tag ~= "" then
+            require("prompter_nvim").push_prompt(tag, description)
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+            vim.notify("Chunk added")
+          end
         end,
         mode = { "v" },
         desc = "Push prompt",
@@ -177,7 +180,7 @@ return {
           require("prompter_nvim").pop_prompt()
           vim.notify("Chunk removed")
         end,
-        mode = { "v" },
+        mode = { "n", "x" },
         desc = "Pop prompt",
       },
       {
@@ -200,7 +203,7 @@ return {
       {
         "<leader>av",
         function()
-          require("prompter_nvim").open_prompt_buffer()
+          require("prompter_nvim").toggle_prompt_buffer()
         end,
         mode = { "n", "x" },
         desc = "Show prompt",
