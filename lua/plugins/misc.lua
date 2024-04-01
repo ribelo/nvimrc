@@ -138,8 +138,8 @@ return {
   },
 
   {
-    -- "ribelo/prompter.nvim",
-    dir = "/home/ribelo/projects/ribelo/prompter.nvim/",
+    "ribelo/prompter.nvim",
+    -- dir = "/home/ribelo/projects/ribelo/prompter.nvim/",
     -- dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
     keys = {
       {
@@ -149,6 +149,15 @@ return {
         end,
         mode = { "n", "x", "v" },
         desc = "Prompter browser",
+      },
+      {
+        "<leader>aS",
+        function()
+          require("prompter_nvim").clear_prompt()
+          require("prompter_nvim").browser()
+        end,
+        mode = { "n", "x", "v" },
+        desc = "Prompter fresh browser",
       },
       {
         "<leader>aa",
