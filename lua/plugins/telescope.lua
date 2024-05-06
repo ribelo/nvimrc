@@ -117,6 +117,13 @@ return {
       { "<leader>st", ":Telescope lsp_type_definitions<CR>", desc = "Workspace types" },
       { "<leader>gb", ":Telescope git_branches<CR>", desc = "Git Branches" },
       { "<m-x>", ":Telescope commands<CR>", desc = "Commands" },
+      {
+        "<leader>sy",
+        function()
+          require("telescope").extensions.yank_history.yank_history({})
+        end,
+        desc = "Paste from Yanky",
+      },
     },
   },
 }

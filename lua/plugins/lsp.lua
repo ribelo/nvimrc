@@ -93,10 +93,6 @@ return {
       -- vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
     end,
     opts = {
-      inlay_hints = { enabled = true },
-      diagnostics = {
-        virtual_text = { prefix = "icons" },
-      },
       servers = {
         cssls = {},
         dockerls = {},
@@ -137,9 +133,10 @@ return {
           -- settings = {
           --   ["rust-analyzer"] = {
           --     procMacro = { enable = true },
-          --     cargo = { allFeatures = true },
+          --     cargo = { features = "all" },
           --     checkOnSave = {
           --       command = "clippy",
+          --       features = "all",
           --       extraArgs = { "--no-deps" },
           --     },
           --   },

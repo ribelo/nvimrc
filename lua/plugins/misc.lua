@@ -1,6 +1,5 @@
 return {
-  "mbbill/undotree",
-  "folke/twilight.nvim",
+  -- "mbbill/undotree",
   "lambdalisue/suda.vim",
   "clojure-vim/vim-jack-in",
   "tpope/vim-dispatch",
@@ -138,8 +137,8 @@ return {
   },
 
   {
-    "ribelo/prompter.nvim",
-    -- dir = "/home/ribelo/projects/ribelo/prompter.nvim/",
+    -- "ribelo/prompter.nvim",
+    dir = "/home/ribelo/projects/ribelo/prompter.nvim/",
     -- dir = "/home/ribelo/projects/nvim_plugins/prompter.nvim/",
     keys = {
       {
@@ -217,6 +216,14 @@ return {
         mode = { "n", "x" },
         desc = "Show prompt",
       },
+      {
+        "<leader>ao",
+        function()
+          require("prompter_nvim").toggle_output_buffer()
+        end,
+        mode = { "n", "x" },
+        desc = "Show output",
+      },
     },
     config = true,
   },
@@ -234,28 +241,15 @@ return {
       },
     },
   },
-
-  {
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    opts = {
-      plugins = {
-        gitsigns = true,
-        tmux = true,
-        kitty = { enabled = false, font = "+2" },
-      },
-    },
-    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-  },
-  {
-    "andymass/vim-matchup",
-    version = false,
-    enabled = true,
-    event = "BufReadPost",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
-    end,
-  },
+  -- {
+  --   "andymass/vim-matchup",
+  --   version = false,
+  --   enabled = true,
+  --   event = "BufReadPost",
+  --   config = function()
+  --     vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+  --   end,
+  -- },
 
   {
     "lukas-reineke/indent-blankline.nvim",

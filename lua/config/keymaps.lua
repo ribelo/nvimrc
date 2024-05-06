@@ -57,17 +57,41 @@ end, { desc = "Choose spell lang" })
 vim.keymap.set("n", "<leader>Se", ":set spelllang=en_us<CR>")
 vim.keymap.set("n", "<leader>Sp", ":set spelllang=pl<CR>")
 
--- change window to id
----@param win_id integer
-local function change_window(win_id)
-  local list = vim.api.nvim_list_wins()
-  local windows = {}
-  for _, id in ipairs(list) do
-    local win = vim.api.nvim_win_get_number(id)
-    windows[win] = id
+local ignore_windows = {
+  "DiffviewFilePanel$",
+  "neo-tree",
+}
+
+local function should_ignore_window(name)
+  for _, pattern in ipairs(ignore_windows) do
+    if string.match(name, pattern) then
+      return true
+    end
   end
-  if windows[win_id] ~= nil then
-    vim.api.nvim_set_current_win(windows[win_id])
+  return false
+end
+
+---@param idx integer
+local function change_window(idx)
+  local current_tabpage = vim.api.nvim_get_current_tabpage()
+  local list = vim.api.nvim_tabpage_list_wins(current_tabpage)
+  local windows = {}
+
+  for _, id in ipairs(list) do
+    local name = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(id))
+
+    if not should_ignore_window(name) then
+      table.insert(windows, id)
+    end
+  end
+
+  local target_index = idx
+  while target_index > #windows do
+    target_index = target_index - #windows
+  end
+
+  if windows[target_index] ~= nil then
+    vim.api.nvim_set_current_win(windows[target_index])
   end
 end
 
