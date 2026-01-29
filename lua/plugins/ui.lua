@@ -1,47 +1,30 @@
 return {
-  -- lualine
   {
-    "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      opts.options.theme = "gruvbox-material"
-      table.insert(opts.sections.lualine_x, {
-        function()
-          return require("util.dashboard").status()
-        end,
-      })
-      table.insert(opts.sections.lualine_z, {
-        function()
-          return vim.api.nvim_win_get_number(0)
-        end,
-      })
+    "sainnhe/gruvbox-material",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.gruvbox_material_background = "hard"
+      vim.g.gruvbox_material_enable_italic = 1
+      vim.cmd.colorscheme("gruvbox-material")
     end,
   },
-  -- dashboard
+
   {
-    "nvimdev/dashboard-nvim",
-    event = "VimEnter",
+    "nvim-tree/nvim-web-devicons",
+    lazy = true,
+  },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "VeryLazy",
     opts = {
-      config = {
-        header = {
-          [[                                        ]],
-          [[                                        ]],
-          [[                                        ]],
-          [[                                        ]],
-          [[<-. (`-')_      (`-')  _     <-. (`-')  ]],
-          [[   \( OO) )    _(OO ) (_)       \(OO )_ ]],
-          [[,--./ ,--/,--.(_/,-.\ ,-(`-'),--./  ,-.)]],
-          [[|   \ |  |\   \ / (_/ | ( OO)|   `.'   |]],
-          [[|  . '|  |)\   /   /  |  |  )|  |'.'|  |]],
-          [[|  |\    |_ \     /_)(|  |_/ |  |   |  |]],
-          [[|  | \   |\-'\   /    |  |'->|  |   |  |]],
-          [[`--'  `--'    `-'     `--'   `--'   `--']],
-          [[                                        ]],
-          [[                                        ]],
-          [[                                        ]],
-          [[                                        ]],
-        },
+      options = {
+        theme = "gruvbox-material",
+        globalstatus = true,
+        section_separators = "",
+        component_separators = "│",
       },
     },
-    dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
 }
