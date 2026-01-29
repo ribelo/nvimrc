@@ -21,8 +21,11 @@ require("lazy").setup({
 
     -- Extras
     { import = "lazyvim.plugins.extras.editor.fzf" },
+    { import = "lazyvim.plugins.extras.editor.neo-tree" },
+
     { import = "lazyvim.plugins.extras.coding.blink" },
     { import = "lazyvim.plugins.extras.coding.yanky" },
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
 
     -- your plugins / overrides
     { import = "plugins" },
