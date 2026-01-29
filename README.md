@@ -6,8 +6,8 @@ Editor-first Neovim config.
 
 - File sidebar: **neo-tree** (`<leader>e`)
 - Search: **telescope** (`<leader>ff`, `<leader>fg`)
-- Git: **gitsigns** (`<leader>gb`, `<leader>gd`) + **lazygit.nvim** (`<leader>gg`)
-- AI companion: **codecompanion.nvim** (`<leader>ac` chat, `<leader>aa` actions)
+- Git: **gitsigns** (`<leader>gb`, `<leader>gd`) + **neogit** (`<leader>gg`)
+- AI companion: **codecompanion.nvim** (`<leader>ac` chat, `<leader>aa` actions, visual `SPC a t` translate)
 
 ## AI setup
 

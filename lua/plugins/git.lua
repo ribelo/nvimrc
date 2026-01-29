@@ -9,8 +9,12 @@ return {
   },
 
   {
-    "kdheepak/lazygit.nvim",
-    cmd = { "LazyGit", "LazyGitConfig", "LazyGitCurrentFile", "LazyGitFilter", "LazyGitFilterCurrentFile" },
-    dependencies = { "nvim-lua/plenary.nvim" },
+    "NeogitOrg/neogit",
+    cmd = "Neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+    config = true,
   },
 }

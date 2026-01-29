@@ -33,6 +33,9 @@ map("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Explorer" })
 map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
 map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })
 
+-- leader leader (Spacemacs style command palette)
+map("n", "<leader><leader>", "<cmd>Telescope commands<CR>", { desc = "Command palette" })
+
 -- git
 map("n", "<leader>gb", function()
   require("gitsigns").blame_line({ full = true })
@@ -40,11 +43,14 @@ end, { desc = "Git blame (full)" })
 map("n", "<leader>gd", function()
   require("gitsigns").diffthis()
 end, { desc = "Git diff" })
-map("n", "<leader>gg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
+map("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Neogit" })
 
 -- AI companion (CodeCompanion)
-map("n", "<leader>ac", ":CodeCompanionChat<CR>", { desc = "AI Chat" })
-map({ "n", "v" }, "<leader>aa", ":CodeCompanionActions<CR>", { desc = "AI Actions" })
+map("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", { desc = "AI Chat" })
+map({ "n", "v" }, "<leader>aa", "<cmd>CodeCompanionActions<CR>", { desc = "AI Actions" })
+
+-- Translate selection to English (Spacemacs-ish: SPC a t)
+map("v", "<leader>at", ":'<,'>CodeCompanion /translate<CR>", { desc = "AI translate to English" })
 
 -- spell language selector
 map("n", "<leader>sl", function()
