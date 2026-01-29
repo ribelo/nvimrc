@@ -45,7 +45,33 @@ map("n", "<leader>ac", "<cmd>CodeCompanionChat<CR>", { desc = "AI Chat" })
 map({ "n", "v" }, "<leader>aa", "<cmd>CodeCompanionActions<CR>", { desc = "AI Actions" })
 
 -- Translate selection to English (Spacemacs-ish: SPC a t)
-map("v", "<leader>at", ":'<,'>CodeCompanion /translate<CR>", { desc = "AI translate to English" })
+-- For translations we want direct replace, no diff/approval step.
+map("v", "<leader>at", function()
+  local approvals = require("codecompanion.interactions.chat.tools.approvals")
+  local approved = approvals.list()
+  local bufnr = vim.api.nvim_get_current_buf()
+  approved[bufnr] = approved[bufnr] or {}
+
+  local prev = approved[bufnr].inline
+  approved[bufnr].inline = true
+
+  local aug = vim.api.nvim_create_augroup("cc_translate_no_diff_" .. bufnr, { clear = true })
+  vim.api.nvim_create_autocmd("User", {
+    group = aug,
+    pattern = "CodeCompanionInlineFinished",
+    once = true,
+    callback = function()
+      -- restore previous approval state
+      if prev == nil then
+        approved[bufnr].inline = nil
+      else
+        approved[bufnr].inline = prev
+      end
+    end,
+  })
+
+  vim.cmd("'<,'>CodeCompanion /translate")
+end, { desc = "AI translate to English" })
 
 -- spell language selector
 map("n", "<leader>sl", function()
