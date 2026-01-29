@@ -61,7 +61,7 @@ return {
               alias = "translate",
               modes = { "v" },
               auto_submit = true,
-              placement = "new",
+              placement = "replace",
             },
             prompts = {
               {
