@@ -28,13 +28,8 @@ map("n", "<leader>bx", ":e" .. vim.fn.expand("~/.local/share/nvim/scratch") .. "
 -- yank file name without extension
 map("n", "<leader>y.", ":let @+ = expand('%:t:r')<CR>", { desc = "Yank name" })
 
--- explorer / search
-map("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Explorer" })
-map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
-map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })
-
--- leader leader (Spacemacs style command palette)
-map("n", "<leader><leader>", "<cmd>Telescope commands<CR>", { desc = "Command palette" })
+-- file picker (Spacemacs: SPC SPC)
+map("n", "<leader><space>", LazyVim.pick("files"), { desc = "Find Files (Root Dir)" })
 
 -- git
 map("n", "<leader>gb", function()
