@@ -3,6 +3,10 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+-- LazyVim
+vim.g.lazyvim_picker = "fzf"
+vim.g.lazyvim_blink_main = false
+
 -- disable netrw (neo-tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

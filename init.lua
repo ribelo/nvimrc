@@ -1,6 +1,6 @@
--- ribelo nvim config (editor-first, minimal)
+-- nvim config (LazyVim-based)
 
-require("config.options")
-require("config.autocmds")
-require("config.keymaps")
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+
 require("config.lazy")

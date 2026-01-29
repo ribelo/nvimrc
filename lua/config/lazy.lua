@@ -1,34 +1,49 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
-  })
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
   spec = {
+    -- LazyVim
+    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+
+    -- Extras
+    { import = "lazyvim.plugins.extras.editor.fzf" },
+    { import = "lazyvim.plugins.extras.coding.blink" },
+    { import = "lazyvim.plugins.extras.coding.yanky" },
+
+    -- your plugins / overrides
     { import = "plugins" },
   },
   defaults = {
-    lazy = true,
+    lazy = false,
     version = false,
   },
-  install = { colorscheme = { "gruvbox-material", "habamax" } },
-  checker = { enabled = true },
+  install = { colorscheme = { "gruvbox-material", "tokyonight", "habamax" } },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
   performance = {
-    cache = { enabled = true },
     rtp = {
-      paths = { vim.fn.stdpath("data") .. "/site" },
       disabled_plugins = {
-        "netrwPlugin",
+        "gzip",
+        "tarPlugin",
         "tohtml",
         "tutor",
+        "zipPlugin",
       },
     },
   },
