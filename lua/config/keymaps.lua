@@ -30,12 +30,8 @@ map("n", "<leader>y.", ":let @+ = expand('%:t:r')<CR>", { desc = "Yank name" })
 
 -- explorer / search
 map("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Explorer" })
-map("n", "<leader>ff", function()
-  require("telescope.builtin").find_files()
-end, { desc = "Find files" })
-map("n", "<leader>fg", function()
-  require("telescope.builtin").live_grep()
-end, { desc = "Live grep" })
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
+map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Live grep" })
 
 -- git
 map("n", "<leader>gb", function()
