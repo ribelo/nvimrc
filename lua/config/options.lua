@@ -14,6 +14,9 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 
+-- use system clipboard by default
+vim.opt.clipboard = "unnamedplus"
+
 vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",
